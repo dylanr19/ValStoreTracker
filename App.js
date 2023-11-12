@@ -21,7 +21,7 @@ export default function App() {
 
   return (
       <View style={styles.page}>
-        <Bundle></Bundle>
+
         <View style={styles.footer}>
           <Feather name="shopping-bag" size={24} top={10} color="yellow" />
           <MaterialIcons name="date-range" size={24} top={10} color="white" />
