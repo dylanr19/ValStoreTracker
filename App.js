@@ -7,6 +7,7 @@ import {Entypo, FontAwesome, Ionicons, Octicons} from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
+import Bundle from "./components/Bundle";
 
 
 export default function App() {
@@ -20,6 +21,7 @@ export default function App() {
 
   return (
       <View style={styles.page}>
+
         <View style={styles.footer}>
           <Feather name="shopping-bag" size={24} top={10} color="yellow" />
           <MaterialIcons name="date-range" size={24} top={10} color="white" />
