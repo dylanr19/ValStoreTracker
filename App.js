@@ -11,26 +11,25 @@ import Bundle from "./components/Bundle";
 
 
 export default function App() {
-let [fontsLoaded, fontError] = useFonts({
-      Oswald_400Regular,
-    });
+  let [fontsLoaded, fontError] = useFonts({
+    Oswald_400Regular,
+  });
 
-if (!fontsLoaded && !fontError){
-  return null;
-}
+  if (!fontsLoaded && !fontError){
+    return null;
+  }
 
   return (
-    <View style={styles.page}>
-      <Bundle></Bundle>
-      <View style={styles.footer}>
-        <Feather name="shopping-bag" size={24} top={10} color="yellow" />
-        <MaterialIcons name="date-range" size={24} top={10} color="white" />
-        <AntDesign name="search1" size={24} top={10} color="white" />
-        <Octicons name="checklist" size={24} top={10} color="white" />
-        <Feather name="settings" size={24} top={10} color="white" />
-      </View>
-      <StatusBar style="auto" />
-    </View>
+      <View style={styles.page}>
+        <Bundle></Bundle>
+        <View style={styles.footer}>
+          <Feather name="shopping-bag" size={24} top={10} color="yellow" />
+          <MaterialIcons name="date-range" size={24} top={10} color="white" />
+          <AntDesign name="search1" size={24} top={10} color="white" />
+          <Octicons name="checklist" size={24} top={10} color="white" />
+          <Feather name="settings" size={24} top={10} color="white" />
+        </View>
+        <StatusBar style="auto" />
   );
 }
 
