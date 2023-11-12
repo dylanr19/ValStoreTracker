@@ -7,7 +7,6 @@ import {Entypo, FontAwesome, Ionicons, Octicons} from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
-import Bundle from "./components/Bundle";
 
 
 export default function App() {
