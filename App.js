@@ -30,6 +30,7 @@ export default function App() {
           <Feather name="settings" size={24} top={10} color="white" />
         </View>
         <StatusBar style="auto" />
+      </View>
   );
 }
 
