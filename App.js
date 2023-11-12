@@ -7,6 +7,7 @@ import {Entypo, FontAwesome, Ionicons, Octicons} from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
+import Bundle from "./components/Bundle";
 
 
 export default function App() {
@@ -20,89 +21,7 @@ if (!fontsLoaded && !fontError){
 
   return (
     <View style={styles.page}>
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <MaskedView maskElement={
-            <LinearGradient style={styles.headerImg} colors={['#FFFFFF', '#FFFFFF00']} start={{x: 0, y: 0.82}} end={{x: 0, y: 0.95}} ></LinearGradient>
-          }>
-            <ImageBackground style={styles.headerImg} source={
-              require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\screenshots\\promo-image.png")
-            }>
-              <View style={styles.headerTextContainer}>
-                <Image style={styles.headerVPImage} source={
-                  require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\icons\\VPEmblem.png")
-                }></Image>
-                <Text style={styles.headerVPValue}>7700</Text>
-                <Text style={styles.headerFeaturedText}>FEATURED | <Text style={{color: "#71FF5A"}}>00:00:00:00</Text></Text>
-                <Text style={styles.headerBundleText}>VALIANT HERO{"\n"}COLLECTION</Text>
-              </View>
-            </ImageBackground>
-          </MaskedView>
-        </View>
-        <ScrollView style={styles.weapons}>
-
-          <View style={styles.weapon}>
-            <Image style={styles.weaponImg} source={
-              require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\screenshots\\vandal.png")}>
-            </Image>
-            <View style={styles.weaponInfo}>
-              <Image style={styles.weaponVPImg} source={
-                require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\icons\\VPEmblem.png")
-              }></Image>
-              <Text style={styles.weaponInfoText}>1775 <Text>Vandal</Text></Text>
-            </View>
-          </View>
-
-          <View style={styles.weapon}>
-            <Image style={styles.weaponImg} source={
-              require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\screenshots\\awp.png")}>
-            </Image>
-            <View style={styles.weaponInfo}>
-              <Image style={styles.weaponVPImg} source={
-                require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\icons\\VPEmblem.png")
-              }></Image>
-              <Text style={styles.weaponInfoText}>1775 <Text>Operator</Text></Text>
-            </View>
-          </View>
-
-          <View style={styles.weapon}>
-            <Image style={styles.weaponImg} source={
-              require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\screenshots\\ares.png")}>
-            </Image>
-            <View style={styles.weaponInfo}>
-              <Image style={styles.weaponVPImg} source={
-                require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\icons\\VPEmblem.png")
-              }></Image>
-              <Text style={styles.weaponInfoText}>1775 <Text>Ares</Text></Text>
-            </View>
-          </View>
-
-          <View style={styles.weapon}>
-            <Image style={styles.weaponImg} source={
-              require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\screenshots\\ghost.png")}>
-            </Image>
-            <View style={styles.weaponInfo}>
-              <Image style={styles.weaponVPImg} source={
-                require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\icons\\VPEmblem.png")
-              }></Image>
-              <Text style={styles.weaponInfoText}>1775 <Text>Ghost</Text></Text>
-            </View>
-          </View>
-
-          <View style={styles.weapon}>
-            <Image style={styles.weaponImg} source={
-              require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\screenshots\\melee.png")}>
-            </Image>
-            <View style={styles.weaponInfo}>
-              <Image style={styles.weaponVPImg} source={
-                require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\icons\\VPEmblem.png")
-              }></Image>
-              <Text style={styles.weaponInfoText}>1775 <Text>Staff</Text></Text>
-            </View>
-          </View>
-
-        </ScrollView>
-      </View>
+      <Bundle></Bundle>
       <View style={styles.footer}>
         <Feather name="shopping-bag" size={24} top={10} color="yellow" />
         <MaterialIcons name="date-range" size={24} top={10} color="white" />
