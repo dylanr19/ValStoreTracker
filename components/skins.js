@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, ScrollView, Image, } from 'react-native';
 import { SearchBar } from 'react-native-elements';
+import {AntDesign, Feather, FontAwesome5} from "@expo/vector-icons";
 
 const Skins = () => {
 
@@ -12,6 +13,7 @@ const Skins = () => {
                            placeholderTextColor="white" searchIcon={styles.SearchbarIcon}
                            platform="ios" placeholder= "Search"
                 ></SearchBar>
+                <Feather  name="filter" size={24} color="white" style={styles.headerFilterIcon} />
             </View>
 
             <ScrollView style={styles.weapons}>
@@ -68,18 +70,26 @@ const styles = StyleSheet.create({
     },
     header: {
         flex: 0.2,
-        justifyContent: "flex-end",
+        width: "100%",
+        flexDirection: "row",
         alignItems: "center",
+        alignSelf: "center",
+    },
+    headerFilterIcon: {
+        flex: 0.13,
+        marginLeft: "2%",
     },
     headerSearchbar: {
+        flex: 0.9,
+        marginLeft: "3%",
         backgroundColor: "#121212",
     },
     SearchbarInputContainer: {
-        backgroundColor: "#212121",
         alignSelf: "center",
-        width: "90%",
+        backgroundColor: "#212121",
     },
     SearchbarIcon: {
+        alignSelf: "flex-start",
         color: "white",
     },
     SearchbarPlaceholder: {
