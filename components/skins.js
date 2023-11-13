@@ -72,12 +72,13 @@ const styles = StyleSheet.create({
         flex: 0.2,
         width: "100%",
         flexDirection: "row",
-        alignItems: "center",
+        alignItems: "flex-end",
         alignSelf: "center",
     },
     headerFilterIcon: {
         flex: 0.13,
         marginLeft: "2%",
+        marginBottom: "6%",
     },
     headerSearchbar: {
         flex: 0.9,
