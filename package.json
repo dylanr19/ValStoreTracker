@@ -13,6 +13,7 @@
     "@expo/vector-icons": "^13.0.0",
     "@react-native-async-storage/async-storage": "^1.19.5",
     "@react-native-masked-view/masked-view": "0.2.9",
+    "@types/react": "~18.2.14",
     "expo": "~49.0.15",
     "expo-font": "~11.4.0",
     "expo-linear-gradient": "~12.3.0",
@@ -20,6 +21,7 @@
     "expo-status-bar": "~1.6.0",
     "react": "18.2.0",
     "react-native": "0.72.6",
+    "react-native-settings-components": "^0.0.2",
     "react-native-elements": "^3.4.3",
     "react-native-storage": "^1.0.1"
   },
