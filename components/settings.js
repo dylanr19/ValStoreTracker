@@ -24,18 +24,59 @@ const AppSettings = () => {
         <View style={styles.container}>
 
             <View style={styles.header}>
-                <SettingsCategoryHeader title={"Settings"} titleStyle={styles.headerTitle}></SettingsCategoryHeader>
+                <SettingsCategoryHeader
+                    title={"Settings"}
+                    titleStyle={styles.headerTitle}>
+                </SettingsCategoryHeader>
             </View>
 
             <ScrollView contentContainerStyle={styles.scrollviewContainer}>
-                <SettingsEditText containerStyle={styles.AccountName} titleStyle={styles.settingText} title={"Account Name"} value={"turkwaz33"}></SettingsEditText>
-                <SettingsDividerShort dividerStyle={styles.dividerShortLine} containerStyle={styles.dividerShort} ios={true}></SettingsDividerShort>
-                <SettingsSwitch containerStyle={styles.rememberAccount} titleStyle={styles.settingText} title={"Remember Account"} value={true}></SettingsSwitch>
-                <SettingsPicker containerStyle={styles.switchAccounts} titleStyle={styles.settingText} title={"Switch Accounts"}></SettingsPicker>
-                <SettingsDividerShort dividerStyle={styles.dividerShortLine} containerStyle={styles.dividerShort} ios={true}></SettingsDividerShort>
-                <SettingsButton containerStyle={styles.Logout} titleStyle={styles.settingText} title={"Logout All"}></SettingsButton>
 
-                <SettingsSwitch containerStyle={styles.showNotifications} titleStyle={styles.settingText} title={"Show Notifications"} value={true}></SettingsSwitch>
+                <SettingsEditText
+                    containerStyle={account.name}
+                    titleStyle={styles.settingText}
+                    title={"Account Name"}
+                    value={"turkwaz33"}>
+                </SettingsEditText>
+
+                <SettingsDividerShort
+                    dividerStyle={dividerShort.line}
+                    containerStyle={dividerShort.container}
+                    ios={true}>
+                </SettingsDividerShort>
+
+                <SettingsSwitch
+                    containerStyle={account.remember}
+                    titleStyle={styles.settingText}
+                    title={"Remember Account"}
+                    value={true}>
+                </SettingsSwitch>
+
+                <SettingsPicker
+                    containerStyle={account.switch}
+                    titleStyle={styles.settingText}
+                    title={"Switch Accounts"}>
+                </SettingsPicker>
+
+                <SettingsDividerShort
+                    dividerStyle={dividerShort.line}
+                    containerStyle={dividerShort.container}
+                    ios={true}>
+                </SettingsDividerShort>
+
+                <SettingsButton
+                    containerStyle={account.Logout}
+                    titleStyle={styles.settingText}
+                    title={"Logout All"}>
+                </SettingsButton>
+
+                <SettingsSwitch
+                    containerStyle={styles.showNotifications}
+                    titleStyle={styles.settingText}
+                    title={"Show Notifications"}
+                    value={true}>
+                </SettingsSwitch>
+
             </ScrollView>
 
         </View>
@@ -67,7 +108,21 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         color: "white",
     },
-    AccountName: {
+    showNotifications: {
+        width: "90%",
+        alignSelf: "center",
+        marginTop: "8%",
+        minHeight: 42,
+        borderRadius: 11,
+        backgroundColor: "#212124",
+    },
+    settingText: {
+      color: "white",
+    },
+});
+
+const account = StyleSheet.create({
+    name: {
         width: "90%",
         minHeight: 42,
         alignSelf: "center",
@@ -75,7 +130,7 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 11,
         backgroundColor: "#212124",
     },
-    rememberAccount: {
+    remember: {
         width: "90%",
         minHeight: 42,
         alignSelf: "center",
@@ -83,7 +138,7 @@ const styles = StyleSheet.create({
         borderBottomLeftRadius: 11,
         backgroundColor: "#212124",
     },
-    switchAccounts: {
+    switch: {
         width: "90%",
         alignSelf: "center",
         minHeight: 42,
@@ -100,23 +155,15 @@ const styles = StyleSheet.create({
         borderBottomLeftRadius: 11,
         backgroundColor: "#212124",
     },
-    showNotifications: {
-        width: "90%",
-        alignSelf: "center",
-        marginTop: "8%",
-        minHeight: 42,
-        borderRadius: 11,
-        backgroundColor: "#212124",
-    },
-    settingText: {
-      color: "white",
-    },
-    dividerShort: {
+});
+
+const dividerShort = StyleSheet.create({
+    container: {
         width: "90%",
         alignSelf: "center",
         backgroundColor: "#212124",
     },
-    dividerShortLine: {
+    line: {
         backgroundColor: "#515151",
         height: 0.3,
     },

@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, ScrollView, Image, } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import {AntDesign, Feather, FontAwesome5} from "@expo/vector-icons";
 import {LinearGradient} from "expo-linear-gradient";
+import Weapon from "./weapon";
 
 const WishList = () => {
 
@@ -9,34 +10,25 @@ const WishList = () => {
         <View style={styles.container}>
 
             <LinearGradient style={styles.header} start={{ x: 0, y: 0.5 }} end={ { x: 0, y: 1 } } colors={["#B7245C", "transparent"]}>
-                <Text style={styles.headerBundleText}>WISH LIST</Text>
+                <Text style={styles.headerText}>WISH LIST</Text>
             </LinearGradient>
 
-            <ScrollView style={styles.weapons}>
+            <ScrollView style={styles.weaponsContainer}>
 
-                <View style={styles.weapon}>
-                    <Image style={styles.weaponImg} source={
-                        require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\screenshots\\ghost.png")}>
-                    </Image>
-                    <View style={styles.weaponInfo}>
-                        <Image style={styles.weaponVPImg} source={
-                            require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\icons\\VPEmblem.png")
-                        }></Image>
-                        <Text style={styles.weaponInfoText}>1775 <Text>Ghost</Text></Text>
-                    </View>
-                </View>
+                <Weapon
+                    name={"Monkey Ghost"}
+                    price={"1775"}
+                    color={"#212121"}
+                    image={require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\images\\ghost.png")}>
+                </Weapon>
 
-                <View style={styles.weapon}>
-                    <Image style={styles.weaponImg} source={
-                        require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\screenshots\\dagger-elderflame.png")}>
-                    </Image>
-                    <View style={styles.weaponInfo}>
-                        <Image style={styles.weaponVPImg} source={
-                            require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\icons\\VPEmblem.png")
-                        }></Image>
-                        <Text style={styles.weaponInfoText}>1775 <Text>Dagger</Text></Text>
-                    </View>
-                </View>
+                <Weapon
+                    name={"Elderflame Dagger"}
+                    price={"1775"}
+                    color={"#212121"}
+                    image={require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\images\\dagger-elderflame.png")}>
+                </Weapon>
+
             </ScrollView>
 
         </View>
@@ -58,7 +50,7 @@ const styles = StyleSheet.create({
         width: "100%",
         justifyContent: "center",
     },
-    headerBundleText: {
+    headerText: {
         fontFamily: "Oswald_400Regular",
         fontStyle: "normal",
         fontSize: 25,
@@ -66,63 +58,9 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         marginBottom: "18%",
     },
-    headerFilterIcon: {
-        flex: 0.13,
-        marginLeft: "2%",
-        marginBottom: "6%",
-    },
-    headerSearchbar: {
-        flex: 0.9,
-        marginLeft: "3%",
-        backgroundColor: "#121212",
-    },
-    SearchbarInputContainer: {
-        alignSelf: "center",
-        backgroundColor: "#212121",
-    },
-    SearchbarIcon: {
-        alignSelf: "flex-start",
-        color: "white",
-    },
-    SearchbarPlaceholder: {
-        backgroundColor: "white",
-    },
-    weapons: {
+    weaponsContainer: {
         flex: 1,
         flexDirection: "column",
-    },
-    weapon: {
-        width: "90%",
-        alignSelf: "center",
-        marginTop: "5%",
-        backgroundColor: "#212121",
-        borderStyle: "solid",
-        borderColor: "red",
-        borderRadius: 15,
-    },
-    weaponImg: {
-        resizeMode:'contain',
-        width: "100%",
-    },
-    weaponInfo: {
-        flex: 1,
-        flexDirection: "row",
-        justifyContent: "flex-start",
-        height: "20%",
-        left: "5%",
-        bottom: "2%",
-        // backgroundColor: "red",
-    },
-    weaponVPImg: {
-        width: "5%",
-        height: "100%",
-    },
-    weaponInfoText: {
-        left: "25%",
-        fontFamily: "Oswald_400Regular",
-        fontStyle: "normal",
-        fontSize: 11,
-        color: "white",
     },
     footer: {
         height: "8%",

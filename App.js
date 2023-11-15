@@ -6,7 +6,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {NavigationContainer} from "@react-navigation/native";
 import Bundle from "./components/Bundle";
 import Daily from "./components/daily";
-import Skins from "./components/skins";
+import Search from "./components/search";
 import WishList from "./components/wish-list";
 
 const Tab = createBottomTabNavigator();
@@ -48,7 +48,7 @@ function MyTabs(){
         >
             <Tab.Screen name="Bundle" component={Bundle} />
             <Tab.Screen name="Daily" component={Daily} />
-            <Tab.Screen name="Search" component={Skins} />
+            <Tab.Screen name="Search" component={Search} />
             <Tab.Screen name="Wish List" component={WishList} />
             <Tab.Screen name="Settings" component={AppSettings} />
         </Tab.Navigator>

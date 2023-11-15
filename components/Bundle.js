@@ -1,12 +1,7 @@
 import MaskedView from "@react-native-masked-view/masked-view";
 import { LinearGradient } from "expo-linear-gradient";
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, ScrollView, Image, ImageBackground } from 'react-native';
-import { useFonts, Oswald_400Regular } from "@expo-google-fonts/oswald";
-import {Entypo, FontAwesome, Ionicons, Octicons} from '@expo/vector-icons';
-import { Feather } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons';
-import { AntDesign } from '@expo/vector-icons';
+import Weapon from "./weapon";
 
 const Bundle = () => {
 
@@ -17,7 +12,7 @@ const Bundle = () => {
                     <LinearGradient style={styles.headerImg} colors={['#FFFFFF', '#FFFFFF00']} start={{x: 0, y: 0.82}} end={{x: 0, y: 0.95}} ></LinearGradient>
                 }>
                     <ImageBackground style={styles.headerImg} source={
-                        require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\screenshots\\promo-image.png")
+                        require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\images\\promo-image.png")
                     }>
                         <View style={styles.headerTextContainer}>
                             <Image style={styles.headerVPImage} source={
@@ -25,72 +20,47 @@ const Bundle = () => {
                             }></Image>
                             <Text style={styles.headerVPValue}>7700</Text>
                             <Text style={styles.headerFeaturedText}>FEATURED | <Text style={{color: "#71FF5A"}}>00:00:00:00</Text></Text>
-                            <Text style={styles.headerBundleText}>VALIANT HERO{"\n"}COLLECTION</Text>
+                            <Text style={styles.headerText}>VALIANT HERO{"\n"}COLLECTION</Text>
                         </View>
                     </ImageBackground>
                 </MaskedView>
             </View>
-            <ScrollView style={styles.weapons}>
+            <ScrollView style={styles.weaponsContainer}>
 
-                <View style={styles.weapon}>
-                    <Image style={styles.weaponImg} source={
-                        require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\screenshots\\vandal.png")}>
-                    </Image>
-                    <View style={styles.weaponInfo}>
-                        <Image style={styles.weaponVPImg} source={
-                            require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\icons\\VPEmblem.png")
-                        }></Image>
-                        <Text style={styles.weaponInfoText}>1775 <Text>Vandal</Text></Text>
-                    </View>
-                </View>
+                <Weapon
+                    name={"Vandal"}
+                    price={"1775"}
+                    color={"#212121"}
+                    image={require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\images\\vandal.png")}>
+                </Weapon>
 
-                <View style={styles.weapon}>
-                    <Image style={styles.weaponImg} source={
-                        require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\screenshots\\awp.png")}>
-                    </Image>
-                    <View style={styles.weaponInfo}>
-                        <Image style={styles.weaponVPImg} source={
-                            require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\icons\\VPEmblem.png")
-                        }></Image>
-                        <Text style={styles.weaponInfoText}>1775 <Text>Operator</Text></Text>
-                    </View>
-                </View>
+                <Weapon
+                    name={"Operator"}
+                    price={"1775"}
+                    color={"#212121"}
+                    image={require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\images\\awp.png")}>
+                </Weapon>
 
-                <View style={styles.weapon}>
-                    <Image style={styles.weaponImg} source={
-                        require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\screenshots\\ares.png")}>
-                    </Image>
-                    <View style={styles.weaponInfo}>
-                        <Image style={styles.weaponVPImg} source={
-                            require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\icons\\VPEmblem.png")
-                        }></Image>
-                        <Text style={styles.weaponInfoText}>1775 <Text>Ares</Text></Text>
-                    </View>
-                </View>
+                <Weapon
+                    name={"Ares"}
+                    price={"1775"}
+                    color={"#212121"}
+                    image={require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\images\\ares.png")}>
+                </Weapon>
 
-                <View style={styles.weapon}>
-                    <Image style={styles.weaponImg} source={
-                        require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\screenshots\\ghost.png")}>
-                    </Image>
-                    <View style={styles.weaponInfo}>
-                        <Image style={styles.weaponVPImg} source={
-                            require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\icons\\VPEmblem.png")
-                        }></Image>
-                        <Text style={styles.weaponInfoText}>1775 <Text>Ghost</Text></Text>
-                    </View>
-                </View>
+                <Weapon
+                    name={"Ghost"}
+                    price={"1775"}
+                    color={"#212121"}
+                    image={require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\images\\ghost.png")}>
+                </Weapon>
 
-                <View style={styles.weapon}>
-                    <Image style={styles.weaponImg} source={
-                        require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\screenshots\\melee.png")}>
-                    </Image>
-                    <View style={styles.weaponInfo}>
-                        <Image style={styles.weaponVPImg} source={
-                            require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\icons\\VPEmblem.png")
-                        }></Image>
-                        <Text style={styles.weaponInfoText}>1775 <Text>Staff</Text></Text>
-                    </View>
-                </View>
+                <Weapon
+                    name={"Knife"}
+                    price={"1775"}
+                    color={"#212121"}
+                    image={require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\images\\melee.png")}>
+                </Weapon>
 
             </ScrollView>
         </View>
@@ -123,7 +93,7 @@ const styles = StyleSheet.create({
         color: "white",
         alignSelf: "flex-start",
     },
-    headerBundleText: {
+    headerText: {
         fontFamily: "Oswald_400Regular",
         fontStyle: "normal",
         fontSize: 17,
@@ -150,42 +120,9 @@ const styles = StyleSheet.create({
         width: "100%",
         height: "100%",
     },
-    weapons: {
+    weaponsContainer: {
         flex: 1,
         flexDirection: "column",
-    },
-    weapon: {
-        width: "90%",
-        alignSelf: "center",
-        marginTop: "5%",
-        backgroundColor: "#212121",
-        borderStyle: "solid",
-        borderColor: "red",
-        borderRadius: 15,
-    },
-    weaponImg: {
-        resizeMode:'contain',
-        width: "100%",
-    },
-    weaponInfo: {
-        flex: 1,
-        flexDirection: "row",
-        justifyContent: "flex-start",
-        height: "20%",
-        left: "5%",
-        bottom: "2%",
-        // backgroundColor: "red",
-    },
-    weaponVPImg: {
-        width: "5%",
-        height: "100%",
-    },
-    weaponInfoText: {
-        left: "25%",
-        fontFamily: "Oswald_400Regular",
-        fontStyle: "normal",
-        fontSize: 11,
-        color: "white",
     },
     footer: {
         height: "8%",

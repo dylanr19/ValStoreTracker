@@ -7,6 +7,7 @@ import {Entypo, FontAwesome, Ionicons, Octicons} from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
+import Weapon from "./weapon";
 
 const Daily = () => {
 
@@ -17,64 +18,44 @@ const Daily = () => {
                     <LinearGradient style={styles.headerImg} colors={['#FFFFFF', '#FFFFFF00']} start={{x: 0, y: 0.82}} end={{x: 0, y: 0.95}} ></LinearGradient>
                 }>
                     <ImageBackground style={styles.headerImg} source={
-                        require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\screenshots\\valo-menu-background.jpeg")
+                        require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\images\\valo-menu-background.jpeg")
                     }>
                         <View style={styles.headerTextContainer}>
-                            <Text style={styles.headerBundleText}>DAILY STORE</Text>
+                            <Text style={styles.headerText}>DAILY STORE</Text>
                             <Text style={styles.headerTimeText}>00:00:00:00</Text>
                         </View>
                     </ImageBackground>
                 </MaskedView>
             </View>
-            <ScrollView style={styles.weapons}>
+            <ScrollView style={styles.weaponsContainer}>
 
-                <View style={styles.weaponContainer}>
-                    <Image style={styles.weaponImg} source={
-                        require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\screenshots\\vandal-reaver.png")}>
-                    </Image>
-                    <View style={styles.weaponInfo}>
-                        <Image style={styles.weaponVPImg} source={
-                            require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\icons\\VPEmblem.png")
-                        }></Image>
-                        <Text style={styles.weaponInfoText}>1775 <Text>Reaver Vandal</Text></Text>
-                    </View>
-                </View>
+                <Weapon
+                    name={"Reaver Vandal"}
+                    price={"1775"}
+                    color={"#0A1B26"}
+                    image={require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\images\\vandal-reaver.png")}>
+                </Weapon>
 
-                <View style={styles.weaponContainer}>
-                    <Image style={styles.weaponImg} source={
-                        require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\screenshots\\operator-prism.png")}>
-                    </Image>
-                    <View style={styles.weaponInfo}>
-                        <Image style={styles.weaponVPImg} source={
-                            require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\icons\\VPEmblem.png")
-                        }></Image>
-                        <Text style={styles.weaponInfoText}>1775 <Text>Prism Operator</Text></Text>
-                    </View>
-                </View>
+                <Weapon
+                    name={"Prism Operator"}
+                    price={"1775"}
+                    color={"#0A1B26"}
+                    image={require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\images\\operator-prism.png")}>
+                </Weapon>
 
-                <View style={styles.weaponContainer}>
-                    <Image style={styles.weaponImg} source={
-                        require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\screenshots\\dagger-elderflame.png")}>
-                    </Image>
-                    <View style={styles.weaponInfo}>
-                        <Image style={styles.weaponVPImg} source={
-                            require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\icons\\VPEmblem.png")
-                        }></Image>
-                        <Text style={styles.weaponInfoText}>1775 <Text>Elderflame Dagger</Text></Text>
-                    </View>
-                </View>
+                <Weapon
+                    name={"Elderflame Dagger"}
+                    price={"1775"}
+                    color={"#0A1B26"}
+                    image={require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\images\\dagger-elderflame.png")}>
+                </Weapon>
 
-                <View style={styles.weaponContainer}>
-                    <Image style={styles.weaponImg} source={
-                        require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\screenshots\\classic-go.png")}>
-                    </Image>
-                    <View style={styles.weaponInfo}>
-                        <Image style={styles.weaponVPImg} source={
-                            require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\icons\\VPEmblem.png")
-                        }></Image>
-                        <Text style={styles.weaponInfoText}>1775 <Text>Classic VALORANT GO!</Text></Text>
-                    </View>
-                </View>
+                <Weapon
+                    name={"Valorant GO! Classic"}
+                    price={"1775"}
+                    color={"#0A1B26"}
+                    image={require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\images\\classic-go.png")}>
+                </Weapon>
 
             </ScrollView>
         </View>
@@ -107,7 +88,7 @@ const styles = StyleSheet.create({
         marginTop: "1.5%",
 
     },
-    headerBundleText: {
+    headerText: {
         fontFamily: "Oswald_400Regular",
         fontStyle: "normal",
         fontSize: 20,
@@ -118,44 +99,44 @@ const styles = StyleSheet.create({
         width: "100%",
         height: "100%",
     },
-    weapons: {
+    weaponsContainer: {
         flex: 1,
         flexDirection: "column",
     },
-    weaponContainer: {
-        width: "90%",
-        alignSelf: "center",
-        marginTop: "5%",
-        backgroundColor: "#0A1B26",
-        borderStyle: "solid",
-        borderColor: "red",
-        borderRadius: 15,
-    },
-    weaponImg: {
-        resizeMode:'contain',
-        alignSelf: "center",
-        width: "80%",
-    },
-    weaponInfo: {
-        flex: 1,
-        flexDirection: "row",
-        justifyContent: "flex-start",
-        height: "20%",
-        left: "5%",
-        bottom: "2%",
-        // backgroundColor: "red",
-    },
-    weaponVPImg: {
-        width: "5%",
-        height: "100%",
-    },
-    weaponInfoText: {
-        left: "25%",
-        fontFamily: "Oswald_400Regular",
-        fontStyle: "normal",
-        fontSize: 11,
-        color: "white",
-    },
+    // weaponContainer: {
+    //     width: "90%",
+    //     alignSelf: "center",
+    //     marginTop: "5%",
+    //     backgroundColor: "#0A1B26",
+    //     borderStyle: "solid",
+    //     borderColor: "red",
+    //     borderRadius: 15,
+    // },
+    // weaponImg: {
+    //     resizeMode:'contain',
+    //     alignSelf: "center",
+    //     width: "80%",
+    // },
+    // weaponInfo: {
+    //     flex: 1,
+    //     flexDirection: "row",
+    //     justifyContent: "flex-start",
+    //     height: "20%",
+    //     left: "5%",
+    //     bottom: "2%",
+    //     // backgroundColor: "red",
+    // },
+    // weaponVPImg: {
+    //     width: "5%",
+    //     height: "100%",
+    // },
+    // weaponInfoText: {
+    //     left: "25%",
+    //     fontFamily: "Oswald_400Regular",
+    //     fontStyle: "normal",
+    //     fontSize: 11,
+    //     color: "white",
+    // },
     footer: {
         height: "8%",
         width: "100%",
