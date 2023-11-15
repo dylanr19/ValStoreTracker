@@ -11,6 +11,10 @@ import WishList from "./components/wish-list";
 
 const Tab = createBottomTabNavigator();
 
+function Test(){
+    
+}
+
 function MyTabs(){
     return(
         <Tab.Navigator
