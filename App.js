@@ -8,6 +8,8 @@ import Bundle from "./components/Bundle";
 import Daily from "./components/daily";
 import Search from "./components/search";
 import WishList from "./components/wish-list";
+import SwiperComponent from "./components/shop";
+import Shop from "./components/shop";
 
 const Tab = createBottomTabNavigator();
 
@@ -19,11 +21,11 @@ function MyTabs(){
                 tabBarIcon: ({ focused, color, size }) => {
                     let iconName;
 
-                    if (route.name === 'Bundle') {
+                    if (route.name === 'Shop') {
                         iconName = 'basket-outline';
                     }
-                    else if (route.name === 'Daily') {
-                        iconName = 'calendar'
+                    else if (route.name === 'Account') {
+                        iconName = 'person-circle-outline'
                     }
                     else if (route.name === 'Search') {
                         iconName = 'search'
@@ -43,8 +45,8 @@ function MyTabs(){
                 headerStyle: styles.header,
             })}
         >
-            <Tab.Screen name="Bundle" component={Bundle} />
-            <Tab.Screen name="Daily" component={Daily} />
+            <Tab.Screen name="Shop" component={Shop} />
+            <Tab.Screen name="Account" component={Daily} />
             <Tab.Screen name="Search" component={Search} />
             <Tab.Screen name="Wish List" component={WishList} />
             <Tab.Screen name="Settings" component={AppSettings} />

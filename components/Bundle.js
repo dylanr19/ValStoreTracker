@@ -1,6 +1,13 @@
 import MaskedView from "@react-native-masked-view/masked-view";
 import { LinearGradient } from "expo-linear-gradient";
-import { StyleSheet, Text, View, ScrollView, Image, ImageBackground } from 'react-native';
+import {
+    StyleSheet,
+    Text,
+    View,
+    ScrollView,
+    Image,
+    ImageBackground,
+} from 'react-native';
 import Weapon from "./weapon";
 
 const Bundle = () => {
@@ -25,44 +32,45 @@ const Bundle = () => {
                     </ImageBackground>
                 </MaskedView>
             </View>
-            <ScrollView style={styles.weaponsContainer}>
 
-                <Weapon
-                    name={"Vandal"}
-                    price={"1775"}
-                    color={"#212121"}
-                    image={require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\images\\vandal.png")}>
-                </Weapon>
+                <ScrollView style={styles.weaponsContainer}>
 
-                <Weapon
-                    name={"Operator"}
-                    price={"1775"}
-                    color={"#212121"}
-                    image={require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\images\\awp.png")}>
-                </Weapon>
+                    <Weapon
+                        name={"Vandal"}
+                        price={"1775"}
+                        color={"#212121"}
+                        image={require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\images\\vandal.png")}>
+                    </Weapon>
 
-                <Weapon
-                    name={"Ares"}
-                    price={"1775"}
-                    color={"#212121"}
-                    image={require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\images\\ares.png")}>
-                </Weapon>
+                    <Weapon
+                        name={"Operator"}
+                        price={"1775"}
+                        color={"#212121"}
+                        image={require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\images\\awp.png")}>
+                    </Weapon>
 
-                <Weapon
-                    name={"Ghost"}
-                    price={"1775"}
-                    color={"#212121"}
-                    image={require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\images\\ghost.png")}>
-                </Weapon>
+                    <Weapon
+                        name={"Ares"}
+                        price={"1775"}
+                        color={"#212121"}
+                        image={require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\images\\ares.png")}>
+                    </Weapon>
 
-                <Weapon
-                    name={"Knife"}
-                    price={"1775"}
-                    color={"#212121"}
-                    image={require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\images\\melee.png")}>
-                </Weapon>
+                    <Weapon
+                        name={"Ghost"}
+                        price={"1775"}
+                        color={"#212121"}
+                        image={require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\images\\ghost.png")}>
+                    </Weapon>
 
-            </ScrollView>
+                    <Weapon
+                        name={"Knife"}
+                        price={"1775"}
+                        color={"#212121"}
+                        image={require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\images\\melee.png")}>
+                    </Weapon>
+
+                </ScrollView>
 
         </View>
     );
@@ -123,23 +131,8 @@ const styles = StyleSheet.create({
     },
     weaponsContainer: {
         flex: 1,
+        marginBottom: "15%",
         flexDirection: "column",
-    },
-    footer: {
-        height: "8%",
-        width: "100%",
-        flexDirection: "row",
-        justifyContent: "space-around",
-        paddingLeft: "5%",
-        paddingRight: "5%",
-        bottom: 0,
-        backgroundColor: "#363636",
-    },
-    footerIcon: {
-        width: "10%",
-        height: "40%",
-        marginTop: "3%",
-        flexWrap: "nowrap",
     },
 });
 

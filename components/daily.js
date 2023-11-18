@@ -101,57 +101,8 @@ const styles = StyleSheet.create({
     },
     weaponsContainer: {
         flex: 1,
+        marginBottom: "15%",
         flexDirection: "column",
-    },
-    // weaponContainer: {
-    //     width: "90%",
-    //     alignSelf: "center",
-    //     marginTop: "5%",
-    //     backgroundColor: "#0A1B26",
-    //     borderStyle: "solid",
-    //     borderColor: "red",
-    //     borderRadius: 15,
-    // },
-    // weaponImg: {
-    //     resizeMode:'contain',
-    //     alignSelf: "center",
-    //     width: "80%",
-    // },
-    // weaponInfo: {
-    //     flex: 1,
-    //     flexDirection: "row",
-    //     justifyContent: "flex-start",
-    //     height: "20%",
-    //     left: "5%",
-    //     bottom: "2%",
-    //     // backgroundColor: "red",
-    // },
-    // weaponVPImg: {
-    //     width: "5%",
-    //     height: "100%",
-    // },
-    // weaponInfoText: {
-    //     left: "25%",
-    //     fontFamily: "Oswald_400Regular",
-    //     fontStyle: "normal",
-    //     fontSize: 11,
-    //     color: "white",
-    // },
-    footer: {
-        height: "8%",
-        width: "100%",
-        flexDirection: "row",
-        justifyContent: "space-around",
-        paddingLeft: "5%",
-        paddingRight: "5%",
-        bottom: 0,
-        backgroundColor: "#363636",
-    },
-    footerIcon: {
-        width: "10%",
-        height: "40%",
-        marginTop: "3%",
-        flexWrap: "nowrap",
     },
 });
 
