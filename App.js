@@ -11,11 +11,8 @@ import WishList from "./components/wish-list";
 
 const Tab = createBottomTabNavigator();
 
-function Test(){
-    
-}
-
 function MyTabs(){
+
     return(
         <Tab.Navigator
             screenOptions={({ route }) => ({
@@ -56,19 +53,19 @@ function MyTabs(){
 }
 
 export default function App() {
-  let [fontsLoaded, fontError] = useFonts({
-    Oswald_400Regular,
-  });
+    let [fontsLoaded, fontError] = useFonts({
+        Oswald_400Regular,
+    });
 
-  if (!fontsLoaded && !fontError){
-    return null;
-  }
+    if (!fontsLoaded && !fontError){
+        return null;
+    }
 
-  return (
+    return (
       <NavigationContainer>
-          <MyTabs></MyTabs>
+              <MyTabs></MyTabs>
       </NavigationContainer>
-  );
+    );
 }
 
 const styles = StyleSheet.create({

@@ -63,6 +63,7 @@ const Bundle = () => {
                 </Weapon>
 
             </ScrollView>
+
         </View>
     );
 }
