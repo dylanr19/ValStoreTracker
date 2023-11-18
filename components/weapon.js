@@ -1,8 +1,19 @@
-import {Image, StyleSheet, Text, View} from "react-native";
+import {Image, Pressable, StyleSheet, Text, View} from "react-native";
+import {useState} from "react";
+import SkinInfo from "./skin-info-modal";
+
+const VPEmblem = "C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\icons\\VPEmblem.png";
 
 const Weapon = ({ image, price, name, color }) => {
+    const [isModalVisible, setModalVisible] = useState(false);
 
-    const VPEmblem = "C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\icons\\VPEmblem.png";
+    const onModalOpen = () => {
+        setModalVisible(true);
+    }
+
+    const onModalClose = () => {
+        setModalVisible(false);
+    }
 
     const containerStyle = {
         ...styles.container,
@@ -10,7 +21,7 @@ const Weapon = ({ image, price, name, color }) => {
     }
 
     return(
-        <View style={containerStyle}>
+        <Pressable style={containerStyle} onPress={onModalOpen}>
 
             <Image style={styles.image} source={image}/>
 
@@ -19,7 +30,8 @@ const Weapon = ({ image, price, name, color }) => {
                 <Text style={info.text}>{price}<Text> {name}</Text></Text>
             </View>
 
-        </View>
+            <SkinInfo onModalClose={onModalClose} isModalVisible={isModalVisible}></SkinInfo>
+        </Pressable>
     );
 }
 
@@ -28,8 +40,6 @@ const styles = StyleSheet.create({
         width: "90%",
         alignSelf: "center",
         marginTop: "5%",
-        borderStyle: "solid",
-        borderColor: "red",
         borderRadius: 15,
     },
     image: {
