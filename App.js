@@ -10,6 +10,7 @@ import Search from "./components/search";
 import WishList from "./components/wish-list";
 import SwiperComponent from "./components/shop";
 import Shop from "./components/shop";
+import Accounts from "./components/accounts";
 
 const Tab = createBottomTabNavigator();
 
@@ -21,7 +22,7 @@ function MyTabs(){
                 tabBarIcon: ({ focused, color, size }) => {
                     let iconName;
 
-                    if (route.name === 'Shop') {
+                    if (route.name === 'Store') {
                         iconName = 'basket-outline';
                     }
                     else if (route.name === 'Account') {
@@ -45,8 +46,8 @@ function MyTabs(){
                 headerStyle: styles.header,
             })}
         >
-            <Tab.Screen name="Shop" component={Shop} />
-            <Tab.Screen name="Account" component={Daily} />
+            <Tab.Screen name="Store" component={Shop} />
+            <Tab.Screen name="Account" component={Accounts} />
             <Tab.Screen name="Search" component={Search} />
             <Tab.Screen name="Wish List" component={WishList} />
             <Tab.Screen name="Settings" component={AppSettings} />
