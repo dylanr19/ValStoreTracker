@@ -24,10 +24,7 @@ const AppSettings = () => {
         <View style={styles.container}>
 
             <View style={styles.header}>
-                <SettingsCategoryHeader
-                    title={"Settings"}
-                    titleStyle={styles.headerTitle}>
-                </SettingsCategoryHeader>
+                <Text style={styles.headerTitle}>Settings</Text>
             </View>
 
             <ScrollView contentContainerStyle={styles.scrollviewContainer}>
@@ -104,7 +101,8 @@ const styles = StyleSheet.create({
         alignItems: "flex-start",
     },
     headerTitle: {
-        fontSize: 25,
+        marginLeft: "5%",
+        fontSize: 30,
         fontWeight: "bold",
         color: "white",
     },
