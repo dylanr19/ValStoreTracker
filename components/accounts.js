@@ -1,6 +1,23 @@
 import React from 'react';
-import {View, StyleSheet, Text, Image, ScrollView, ImageBackground} from "react-native";
+import {View, StyleSheet, Text, Image, ScrollView, ImageBackground, TouchableHighlight} from "react-native";
 import {Ionicons} from "@expo/vector-icons";
+import Swipeable from 'react-native-swipeable';
+
+const leftContent = <Text>Pull to activate</Text>;
+
+const swipeButton = [
+    <TouchableHighlight style={{ backgroundColor: "#d90429", height: "50%" }}>
+
+        <Text
+            style={{
+                color: "white",
+                fontWeight: "bold",
+                marginTop: "5%",
+                marginLeft: "2.5%"
+        }}>Remove</Text>
+
+    </TouchableHighlight>
+];
 
 const Accounts = () => {
     return(
@@ -8,60 +25,71 @@ const Accounts = () => {
             <View style={styles.container}>
 
                 <View style={header.container}>
-                    <Ionicons name="close-outline" size={40} color="white" />
                     <Text style={header.title}>Accounts</Text>
-                </View>
-
-                <View style={name.container}>
-                    <Text style={name.text}>turkwaz #olm3</Text>
                 </View>
 
                 <View style={styles.thinLine}></View>
 
                 <ScrollView contentContainerStyle={accounts.container}>
-                    <View style={accounts.accountContainer}>
+
+                    <Swipeable
+                        contentContainerStyle={accounts.accountContainer}
+                        leftContent={leftContent}
+                        rightButtons={swipeButton}>
+
                         <ImageBackground
-                            style={accounts.image}
+                            style={[accounts.image, {borderWidth: 3, borderColor: "#55a630"}]}
                             source={{
                                 uri: "https://media.valorant-api.com/playercards/33c1f011-4eca-068c-9751-f68c788b2eee/wideart.png"
-                            }}
-                        ><Text style={accounts.text}>Turkwaz #olm3</Text></ImageBackground>
-                    </View>
+                            }}>
+                            <Text style={accounts.text}>Turkwaz #olm3</Text>
+                        </ImageBackground>
 
-                    <View style={accounts.accountContainer}>
+                    </Swipeable>
+
+                    <Swipeable
+                        contentContainerStyle={accounts.accountContainer}
+                        leftContent={leftContent}
+                        rightButtons={swipeButton}>
+
                         <ImageBackground
-                            style={accounts.image}
+                            style={[accounts.image, {borderWidth: 0, borderColor: "#55a630"}]}
                             source={{
                                 uri: "https://media.valorant-api.com/playercards/3432dc3d-47da-4675-67ae-53adb1fdad5e/wideart.png"
-                            }}
-                        ><Text style={accounts.text}>proman #EUWEST</Text></ImageBackground>
-                    </View>
+                            }}>
+                            <Text style={accounts.text}>proman #EUWEST</Text>
+                        </ImageBackground>
 
-                    <View style={accounts.accountContainer}>
-                        <ImageBackground
-                            style={accounts.image}
-                            source={{
-                                uri: "https://media.valorant-api.com/playercards/475ce7c1-4ddc-63aa-7e22-54bb621d615b/wideart.png"
-                            }}
-                        ><Text style={accounts.text}>asdf #mikl</Text></ImageBackground>
-                    </View>
+                    </Swipeable>
+
+                    <Swipeable
+                        contentContainerStyle={accounts.accountContainer}
+                        leftContent={leftContent}
+                        rightButtons={swipeButton}>
+
+                            <ImageBackground
+                                style={[accounts.image, {borderWidth: 0, borderColor: "#55a630"}]}
+                                source={{
+                                    uri: "https://media.valorant-api.com/playercards/475ce7c1-4ddc-63aa-7e22-54bb621d615b/wideart.png"
+                                }}>
+                                <Text style={accounts.text}>asdf #mikl</Text>
+                            </ImageBackground>
+
+                    </Swipeable>
 
                 </ScrollView>
 
                 <View style={styles.thinLine}></View>
 
-                <View style={buttons.container}>
-                    <View style={buttons.buttonContainer}>
+                <View style={bottomButtons.container}>
+                    <View style={bottomButtons.buttonContainer}>
                         <Ionicons name="ios-person-add-outline" size={30} color="white" />
-                        <Text style={buttons.text}>Add Account</Text>
+                        <Text style={bottomButtons.text}>Add Account</Text>
                     </View>
-                    <View style={buttons.buttonContainer}>
-                        <Ionicons name="ios-person-remove-outline" size={30} color="white" />
-                        <Text style={buttons.text}>Remove Account</Text>
-                    </View>
-                    <View style={buttons.buttonContainer}>
-                        <Ionicons style={buttons.logoutIcon} name="ios-log-out-outline" size={30} color="white" />
-                        <Text style={buttons.text}>Logout All Accounts</Text>
+
+                    <View style={bottomButtons.buttonContainer}>
+                        <Ionicons style={bottomButtons.logoutIcon} name="ios-log-out-outline" size={30} color="white" />
+                        <Text style={bottomButtons.text}>Logout from all Accounts</Text>
                     </View>
                 </View>
 
@@ -94,12 +122,12 @@ const header = StyleSheet.create({
     container: {
         flex: 0.1,
         flexDirection: "row",
+        marginBottom: "2%",
     },
     title: {
         marginTop: 5,
-        marginLeft: 10,
-        fontSize: 25,
-        fontWeight: "500",
+        fontSize: 30,
+        fontWeight: "bold",
         color: "white",
     },
 });
@@ -121,15 +149,14 @@ const accounts = StyleSheet.create({
         flex: 1,
     },
     accountContainer: {
-        height: "30%",
+        height: "50%",
         width: "100%",
-        marginBottom: "5%",
         justifyContent: "flex-start",
         flexDirection: "row",
     },
     image: {
         width: "100%",
-        height: "90%",
+        height: "100%",
         resizeMode: "contain",
         justifyContent: "center",
         alignItems: "center",
@@ -142,7 +169,7 @@ const accounts = StyleSheet.create({
     },
 });
 
-const buttons = StyleSheet.create({
+const bottomButtons = StyleSheet.create({
     container: {
         flex: 0.5,
     },
