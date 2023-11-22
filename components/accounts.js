@@ -34,7 +34,7 @@ const Accounts = () => {
                     <ScrollView>
 
                         <Swipeable
-                            contentContainerStyle={accounts.accountContainer}
+                            contentContainerStyle={[accounts.accountContainer, {backgroundColor: "#363636"}]}
                             leftContent={leftContent}
                             rightButtons={swipeButton}>
 
@@ -48,20 +48,20 @@ const Accounts = () => {
                             </View>
 
                             <View style={accounts.textContainer}>
-                                <Text style={accounts.text}>her jett</Text>
-                                <Text style={accounts.tag}>#luvu</Text>
+                                <Text style={[accounts.text, {color: "tomato"}]}>her jett</Text>
+                                <Text style={[accounts.tag, {color: "gray"}]}>#luvu</Text>
                             </View>
 
                             <Ionicons
-                                name="ios-checkmark"
-                                size={24} color="blue"
+                                name="ios-arrow-forward"
+                                size={22} color="gray"
                                 style={{ display: "undefined" }}
                             />
 
                         </Swipeable>
 
                         <Swipeable
-                            contentContainerStyle={accounts.accountContainer}
+                            contentContainerStyle={[accounts.accountContainer, {backgroundColor: "rgb(25,25,25)"}]}
                             leftContent={leftContent}
                             rightButtons={swipeButton}>
 
@@ -80,15 +80,15 @@ const Accounts = () => {
                             </View>
 
                             <Ionicons
-                                name="ios-checkmark"
-                                size={24} color="blue"
-                                style={{ display: "none" }}
+                                name="ios-arrow-forward"
+                                size={22} color="gray"
+                                style={{ display: "undefined" }}
                             />
 
                         </Swipeable>
 
                         <Swipeable
-                            contentContainerStyle={accounts.accountContainer}
+                            contentContainerStyle={[accounts.accountContainer, {backgroundColor: "rgb(25,25,25)"}]}
                             leftContent={leftContent}
                             rightButtons={swipeButton}>
 
@@ -107,9 +107,9 @@ const Accounts = () => {
                             </View>
 
                             <Ionicons
-                                name="ios-checkmark"
-                                size={24} color="blue"
-                                style={{ display: "none" }}
+                                name="ios-arrow-forward"
+                                size={22} color="gray"
+                                style={{ display: "undefined" }}
                             />
 
                         </Swipeable>
