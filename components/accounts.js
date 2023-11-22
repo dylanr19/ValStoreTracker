@@ -6,14 +6,14 @@ import Swipeable from 'react-native-swipeable';
 const leftContent = <Text>Pull to activate</Text>;
 
 const swipeButton = [
-    <TouchableHighlight style={{ backgroundColor: "#d90429", height: "50%" }}>
+    <TouchableHighlight style={{ height: 70 }}>
 
         <Text
             style={{
-                color: "white",
+                color: "red",
                 fontWeight: "bold",
-                marginTop: "5%",
-                marginLeft: "2.5%"
+                marginTop: 25,
+                marginLeft: "2.5%",
         }}>Remove</Text>
 
     </TouchableHighlight>
@@ -30,54 +30,92 @@ const Accounts = () => {
 
                 <View style={styles.thinLine}></View>
 
-                <ScrollView contentContainerStyle={accounts.container}>
+                <View style={accounts.container}>
+                    <ScrollView>
 
-                    <Swipeable
-                        contentContainerStyle={accounts.accountContainer}
-                        leftContent={leftContent}
-                        rightButtons={swipeButton}>
+                        <Swipeable
+                            contentContainerStyle={accounts.accountContainer}
+                            leftContent={leftContent}
+                            rightButtons={swipeButton}>
 
-                        <ImageBackground
-                            style={[accounts.image, {borderWidth: 3, borderColor: "#55a630"}]}
-                            source={{
-                                uri: "https://media.valorant-api.com/playercards/33c1f011-4eca-068c-9751-f68c788b2eee/wideart.png"
-                            }}>
-                            <Text style={accounts.text}>Turkwaz #olm3</Text>
-                        </ImageBackground>
+                            <View style={[accounts.imageContainer, {}]}>
+                                <ImageBackground
+                                    style={[accounts.image, {}]}
+                                    source={{
+                                        uri: "https://media.valorant-api.com/playercards/33c1f011-4eca-068c-9751-f68c788b2eee/displayicon.png"
+                                    }}>
+                                </ImageBackground>
+                            </View>
 
-                    </Swipeable>
+                            <View style={accounts.textContainer}>
+                                <Text style={accounts.text}>her jett</Text>
+                                <Text style={accounts.tag}>#luvu</Text>
+                            </View>
 
-                    <Swipeable
-                        contentContainerStyle={accounts.accountContainer}
-                        leftContent={leftContent}
-                        rightButtons={swipeButton}>
+                            <Ionicons
+                                name="ios-checkmark"
+                                size={24} color="blue"
+                                style={{ display: "undefined" }}
+                            />
 
-                        <ImageBackground
-                            style={[accounts.image, {borderWidth: 0, borderColor: "#55a630"}]}
-                            source={{
-                                uri: "https://media.valorant-api.com/playercards/3432dc3d-47da-4675-67ae-53adb1fdad5e/wideart.png"
-                            }}>
-                            <Text style={accounts.text}>proman #EUWEST</Text>
-                        </ImageBackground>
+                        </Swipeable>
 
-                    </Swipeable>
+                        <Swipeable
+                            contentContainerStyle={accounts.accountContainer}
+                            leftContent={leftContent}
+                            rightButtons={swipeButton}>
 
-                    <Swipeable
-                        contentContainerStyle={accounts.accountContainer}
-                        leftContent={leftContent}
-                        rightButtons={swipeButton}>
+                            <View style={[accounts.imageContainer, {}]}>
+                                <ImageBackground
+                                    style={[accounts.image, {}]}
+                                    source={{
+                                        uri: "https://media.valorant-api.com/playercards/475ce7c1-4ddc-63aa-7e22-54bb621d615b/wideart.png"
+                                    }}>
+                                </ImageBackground>
+                            </View>
 
-                            <ImageBackground
-                                style={[accounts.image, {borderWidth: 0, borderColor: "#55a630"}]}
-                                source={{
-                                    uri: "https://media.valorant-api.com/playercards/475ce7c1-4ddc-63aa-7e22-54bb621d615b/wideart.png"
-                                }}>
-                                <Text style={accounts.text}>asdf #mikl</Text>
-                            </ImageBackground>
+                            <View style={accounts.textContainer}>
+                                <Text style={accounts.text}>Turkwaz</Text>
+                                <Text style={accounts.tag}>#olm33</Text>
+                            </View>
 
-                    </Swipeable>
+                            <Ionicons
+                                name="ios-checkmark"
+                                size={24} color="blue"
+                                style={{ display: "none" }}
+                            />
 
-                </ScrollView>
+                        </Swipeable>
+
+                        <Swipeable
+                            contentContainerStyle={accounts.accountContainer}
+                            leftContent={leftContent}
+                            rightButtons={swipeButton}>
+
+                            <View style={[accounts.imageContainer, {}]}>
+                                <ImageBackground
+                                    style={[accounts.image, {}]}
+                                    source={{
+                                        uri: "https://media.valorant-api.com/playercards/2ee6d025-4aac-3a67-0f6e-dba827acc75f/displayicon.png"
+                                    }}>
+                                </ImageBackground>
+                            </View>
+
+                            <View style={accounts.textContainer}>
+                                <Text style={accounts.text}>PRNZE</Text>
+                                <Text style={accounts.tag}>#7284</Text>
+                            </View>
+
+                            <Ionicons
+                                name="ios-checkmark"
+                                size={24} color="blue"
+                                style={{ display: "none" }}
+                            />
+
+                        </Swipeable>
+
+                    </ScrollView>
+                </View>
 
                 <View style={styles.thinLine}></View>
 
@@ -112,6 +150,7 @@ const styles = StyleSheet.create({
     },
     thinLine: {
         marginBottom: "5%",
+        marginTop: "5%",
         width: "100%",
         height: "0.2%",
         backgroundColor: "#515151",
@@ -122,10 +161,9 @@ const header = StyleSheet.create({
     container: {
         flex: 0.1,
         flexDirection: "row",
-        marginBottom: "2%",
     },
     title: {
-        marginTop: 5,
+        marginTop: 10,
         fontSize: 30,
         fontWeight: "bold",
         color: "white",
@@ -147,25 +185,37 @@ const name = StyleSheet.create({
 const accounts = StyleSheet.create({
     container: {
         flex: 1,
+        flexDirection: "column",
     },
     accountContainer: {
-        height: "50%",
-        width: "100%",
-        justifyContent: "flex-start",
+        flex: 1,
         flexDirection: "row",
+        alignItems: "center",
+        height: 70,
+        marginBottom: 20,
+    },
+    imageContainer: {
+      width: "23%",
     },
     image: {
         width: "100%",
         height: "100%",
-        resizeMode: "contain",
-        justifyContent: "center",
-        alignItems: "center",
+        resizeMode: "stretch",
+        backgroundColor: "red"
+    },
+    textContainer: {
+        flex: 1,
+        flexDirection: "column",
+        width: "10%",
+        marginLeft: "2%",
     },
     text: {
-        fontSize: 20,
+        fontSize: 16,
         color: "white",
-        backgroundColor: "rgba(38, 38, 38, 0.7)",
-        padding: "1%",
+    },
+    tag: {
+        fontSize: 13,
+        color: "grey"
     },
 });
 
