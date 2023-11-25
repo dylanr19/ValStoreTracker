@@ -4,13 +4,11 @@ import {Ionicons} from '@expo/vector-icons';
 import AppSettings from "./components/settings";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {NavigationContainer} from "@react-navigation/native";
-import Bundle from "./components/Bundle";
-import Daily from "./components/daily";
 import Search from "./components/search";
 import WishList from "./components/wish-list";
-import SwiperComponent from "./components/shop";
 import Shop from "./components/shop";
 import Accounts from "./components/accounts";
+import Login from "./components/login";
 
 const Tab = createBottomTabNavigator();
 
