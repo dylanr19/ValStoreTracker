@@ -1,19 +1,22 @@
 import MaskedView from "@react-native-masked-view/masked-view";
 import { LinearGradient } from "expo-linear-gradient";
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, ScrollView, Image, ImageBackground } from 'react-native';
-import { useFonts, Oswald_400Regular } from "@expo-google-fonts/oswald";
-import {Entypo, FontAwesome, Ionicons, Octicons} from '@expo/vector-icons';
-import { Feather } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons';
-import { AntDesign } from '@expo/vector-icons';
+import {StyleSheet, Text, View, ScrollView, ImageBackground, Animated} from 'react-native';
 import Weapon from "./weapon";
+import {useState} from "react";
 
 const Daily = () => {
+    const [scrollY] = useState(new Animated.Value(0));
+
+    const headerHeight = scrollY.interpolate({
+       inputRange: [0, 200],
+       outputRange: ["30%", "0%"],
+       extrapolate: 'clamp'
+    });
 
     return(
         <View style={styles.container}>
-            <View style={styles.header}>
+
+            <Animated.View style={{ height: headerHeight }}>
                 <MaskedView maskElement={
                     <LinearGradient style={styles.headerImg} colors={['#FFFFFF', '#FFFFFF00']} start={{x: 0, y: 0.82}} end={{x: 0, y: 0.95}} ></LinearGradient>
                 }>
@@ -26,8 +29,15 @@ const Daily = () => {
                         </View>
                     </ImageBackground>
                 </MaskedView>
-            </View>
-            <ScrollView style={styles.weaponsContainer}>
+            </Animated.View>
+
+            <ScrollView
+                style={styles.weaponsContainer}
+                scrollEventThrottle={16}
+                onScroll={Animated.event([
+                    { nativeEvent: { contentOffset: { y: scrollY } } },
+                ])}
+            >
 
                 <Weapon
                     name={"Reaver Vandal"}

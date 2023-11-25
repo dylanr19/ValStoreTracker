@@ -1,3 +1,4 @@
+import {Animated} from "react-native";
 import MaskedView from "@react-native-masked-view/masked-view";
 import { LinearGradient } from "expo-linear-gradient";
 import {
@@ -9,12 +10,21 @@ import {
     ImageBackground,
 } from 'react-native';
 import Weapon from "./weapon";
+import {useState} from "react";
 
 const Bundle = () => {
+    const [scrollY] = useState(new Animated.Value(0));
+
+    const headerHeight = scrollY.interpolate({
+        inputRange: [0, 200], // Adjust the range as needed
+        outputRange: ["30%", "0%"], // Initial and final height of the header
+        extrapolate: 'clamp',
+    });
 
     return(
         <View style={styles.container}>
-            <View style={styles.header}>
+
+            <Animated.View style={{ height: headerHeight }}>
                 <MaskedView maskElement={
                     <LinearGradient style={styles.headerImg} colors={['#FFFFFF', '#FFFFFF00']} start={{x: 0, y: 0.82}} end={{x: 0, y: 0.95}} ></LinearGradient>
                 }>
@@ -22,53 +32,56 @@ const Bundle = () => {
                         require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\images\\promo-image.png")
                     }>
                         <View style={styles.headerTextContainer}>
-                            <Image style={styles.headerVPImage} source={
-                                require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\icons\\VPEmblem.png")
-                            }></Image>
-                            <Text style={styles.headerVPValue}>7700</Text>
                             <Text style={styles.headerFeaturedText}>FEATURED | <Text style={{color: "#71FF5A"}}>00:00:00:00</Text></Text>
                             <Text style={styles.headerText}>VALIANT HERO{"\n"}COLLECTION</Text>
                         </View>
+
                     </ImageBackground>
+
                 </MaskedView>
-            </View>
+            </Animated.View>
 
-                <ScrollView style={styles.weaponsContainer}>
+                <ScrollView
+                    style={styles.weaponsContainer}
+                    scrollEventThrottle={16}
+                    onScroll={Animated.event([
+                        { nativeEvent: { contentOffset: { y: scrollY } } },
+                    ])}
+                >
+                        <Weapon
+                            name={"Vandal"}
+                            price={"1775"}
+                            color={"#212121"}
+                            image={require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\images\\vandal.png")}>
+                        </Weapon>
 
-                    <Weapon
-                        name={"Vandal"}
-                        price={"1775"}
-                        color={"#212121"}
-                        image={require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\images\\vandal.png")}>
-                    </Weapon>
+                        <Weapon
+                            name={"Operator"}
+                            price={"1775"}
+                            color={"#212121"}
+                            image={require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\images\\awp.png")}>
+                        </Weapon>
 
-                    <Weapon
-                        name={"Operator"}
-                        price={"1775"}
-                        color={"#212121"}
-                        image={require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\images\\awp.png")}>
-                    </Weapon>
+                        <Weapon
+                            name={"Ares"}
+                            price={"1775"}
+                            color={"#212121"}
+                            image={require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\images\\ares.png")}>
+                        </Weapon>
 
-                    <Weapon
-                        name={"Ares"}
-                        price={"1775"}
-                        color={"#212121"}
-                        image={require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\images\\ares.png")}>
-                    </Weapon>
+                        <Weapon
+                            name={"Ghost"}
+                            price={"1775"}
+                            color={"#212121"}
+                            image={require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\images\\ghost.png")}>
+                        </Weapon>
 
-                    <Weapon
-                        name={"Ghost"}
-                        price={"1775"}
-                        color={"#212121"}
-                        image={require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\images\\ghost.png")}>
-                    </Weapon>
-
-                    <Weapon
-                        name={"Knife"}
-                        price={"1775"}
-                        color={"#212121"}
-                        image={require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\images\\melee.png")}>
-                    </Weapon>
+                        <Weapon
+                            name={"Knife"}
+                            price={"1775"}
+                            color={"#212121"}
+                            image={require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\images\\melee.png")}>
+                        </Weapon>
 
                 </ScrollView>
 
@@ -87,7 +100,7 @@ const styles = StyleSheet.create({
         flexDirection: "column",
     },
     header: {
-        flex: 0.5,
+        // flex: 0.5,
     },
     headerTextContainer: {
         flex: 1,
@@ -108,22 +121,6 @@ const styles = StyleSheet.create({
         fontSize: 17,
         color: "white",
         alignSelf: "flex-start",
-    },
-    headerVPImage: {
-        height: "8%",
-        width: "5%",
-        alignSelf: "flex-end",
-        top: "36.5%",
-        right: "10%",
-    },
-    headerVPValue: {
-        alignSelf: "flex-end",
-        top: "28%",
-        right: "1.5%",
-        fontFamily: "Oswald_400Regular",
-        fontStyle: "normal",
-        fontSize: 15,
-        color: "white",
     },
     headerImg: {
         width: "100%",
