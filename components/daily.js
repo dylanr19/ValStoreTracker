@@ -2,16 +2,116 @@ import MaskedView from "@react-native-masked-view/masked-view";
 import { LinearGradient } from "expo-linear-gradient";
 import {StyleSheet, Text, View, ScrollView, ImageBackground, Animated} from 'react-native';
 import Weapon from "./weapon";
-import {useState} from "react";
+import {useContext, useEffect, useState} from "react";
+import {
+    getBundleDurationInSeconds,
+    getSingleSkinsDurationInSeconds,
+    getSkinOffers,
+    getStorePrice
+} from "../api/StoreService";
+import {Auth} from "./auth";
 
 const Daily = () => {
+    const { authState } = useContext(Auth);
     const [scrollY] = useState(new Animated.Value(0));
+    const [ weaponComponents, setWeaponComponents ] = useState([]);
 
     const headerHeight = scrollY.interpolate({
-       inputRange: [0, 200],
+       inputRange: [0, 100],
        outputRange: ["30%", "0%"],
        extrapolate: 'clamp'
     });
+
+    const [durationRemainingInSeconds, setDurationRemainingInSeconds] = useState(0);
+    const [durationRemainingInTime, setDurationRemainingInTime] = useState('00:00:00:00');
+    const updateTimer = () => {
+
+        setDurationRemainingInSeconds(durationRemainingInSeconds - 1);
+    }
+
+    useEffect(() => {
+
+        convertDurationInSecondsToTime();
+
+    }, [durationRemainingInSeconds])
+
+    const convertDurationInSecondsToTime = () => {
+
+        const days = Math.floor(durationRemainingInSeconds / (60 * 60 * 24));
+        const hours = Math.floor((durationRemainingInSeconds % (60 * 60 * 24)) / (60 * 60));
+        const minutes = Math.floor((durationRemainingInSeconds % (60 * 60)) / 60);
+        const seconds = durationRemainingInSeconds % 60;
+
+        const formattedTime = `${days}:${hours}:${minutes}:${seconds}`;
+
+        setDurationRemainingInTime(formattedTime);
+    }
+
+    useEffect(() => {
+
+        const fetchDuration = async () => {
+            const durationInSeconds = await getSingleSkinsDurationInSeconds(
+                authState.shard,
+                authState.puuid,
+                authState.entitlement,
+                authState.token
+            );
+
+            setDurationRemainingInSeconds(durationInSeconds);
+        }
+
+        fetchDuration();
+
+        return () => {};
+    }, [authState]);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            updateTimer();
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, [durationRemainingInSeconds]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            if (authState.isSigned === true){
+                const fetchedSkins = await getSkinOffers(
+                    authState.shard,
+                    authState.puuid,
+                    authState.entitlement,
+                    authState.token
+                );
+
+                const weaponComponents = [];
+
+                for (const skin of fetchedSkins) {
+                    const price = await getStorePrice(
+                        authState.shard,
+                        authState.puuid,
+                        authState.entitlement,
+                        authState.token,
+                        skin.levels[0].uuid,
+                    );
+
+                    weaponComponents.push(
+                        <Weapon
+                            name={skin.displayName}
+                            price={price}
+                            color={"#212121"}
+                            image={{ uri: skin.displayIcon }}>
+                        </Weapon>
+                    );
+                }
+
+                setWeaponComponents(weaponComponents);
+            }
+        }
+
+        fetchData();
+
+        return () => {};
+    }, [authState]);
 
     return(
         <View style={styles.container}>
@@ -25,8 +125,9 @@ const Daily = () => {
                     }>
                         <View style={styles.headerTextContainer}>
                             <Text style={styles.headerText}>DAILY STORE</Text>
-                            <Text style={styles.headerTimeText}>00:00:00:00</Text>
+                            <Text style={styles.headerTimeText}>{durationRemainingInTime}</Text>
                         </View>
+
                     </ImageBackground>
                 </MaskedView>
             </Animated.View>
@@ -36,38 +137,15 @@ const Daily = () => {
                 scrollEventThrottle={16}
                 onScroll={Animated.event([
                     { nativeEvent: { contentOffset: { y: scrollY } } },
-                ])}
+                ],{ useNativeDriver: false })}
             >
 
-                <Weapon
-                    name={"Reaver Vandal"}
-                    price={"1775"}
-                    color={"#0A1B26"}
-                    image={require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\images\\vandal-reaver.png")}>
-                </Weapon>
-
-                <Weapon
-                    name={"Prism Operator"}
-                    price={"1775"}
-                    color={"#0A1B26"}
-                    image={require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\images\\operator-prism.png")}>
-                </Weapon>
-
-                <Weapon
-                    name={"Elderflame Dagger"}
-                    price={"1775"}
-                    color={"#0A1B26"}
-                    image={require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\images\\dagger-elderflame.png")}>
-                </Weapon>
-
-                <Weapon
-                    name={"Valorant GO! Classic"}
-                    price={"1775"}
-                    color={"#0A1B26"}
-                    image={require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\images\\classic-go.png")}>
-                </Weapon>
+                {weaponComponents.map(weapon => (
+                    <View key={weapon.uuid}>{weapon}</View>
+                ))}
 
             </ScrollView>
+
         </View>
     );
 }
@@ -83,7 +161,7 @@ const styles = StyleSheet.create({
         flexDirection: "column",
     },
     header: {
-        flex: 0.5,
+        // flex: 0.5,
     },
     headerTextContainer: {
         flex: 1,
@@ -103,7 +181,6 @@ const styles = StyleSheet.create({
         fontStyle: "normal",
         fontSize: 20,
         color: "white",
-
     },
     headerImg: {
         width: "100%",

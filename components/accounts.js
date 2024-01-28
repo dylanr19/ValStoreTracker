@@ -1,55 +1,158 @@
-import React from 'react';
-import {View, StyleSheet, Text, Image, ScrollView, ImageBackground, TouchableHighlight} from "react-native";
+import {
+    View,
+    StyleSheet,
+    Text,
+    Image,
+    ScrollView,
+    ImageBackground,
+    TouchableHighlight,
+    Button,
+    Pressable
+} from "react-native";
+import React, {useEffect, useState, useContext} from "react";
 import {Ionicons} from "@expo/vector-icons";
 import Swipeable from 'react-native-swipeable';
+import {getPlayerCard, getPlayerLoadout, getWallet} from "../api/StoreService";
+import auth, {Auth} from "./auth";
+import {fetchNameService} from "../api/NameService";
+import {fetchPlayerInfo} from "../api/AuthService";
+
 
 const leftContent = <Text>Pull to activate</Text>;
 
-const swipeButton = [
-    <TouchableHighlight style={{ height: 70 }}>
-
-        <Text
-            style={{
-                color: "red",
-                fontWeight: "bold",
-                marginTop: 25,
-                marginLeft: "2.5%",
-        }}>Remove</Text>
-
-    </TouchableHighlight>
-];
-
 const Accounts = () => {
+
+    const [ wallet, setWallet ] = useState({
+        valorantPoints: '',
+        radianite: '',
+    });
+    const [playerCard, setPlayerCard] = useState('');
+    const [playerName, setPlayerName] = useState({ name: '', tag: '' });
+
+    const { logout, authState } = useContext(Auth);
+
+    const initWallet = async () => {
+
+        const walletResponse = await getWallet(
+            authState.shard,
+            authState.puuid,
+            authState.entitlement,
+            authState.token
+        );
+
+        const balances = walletResponse.Balances;
+        const valorantPoints = balances[Object.keys(balances)[0]];
+        const radianite = balances[Object.keys(balances)[2]];
+
+        setWallet(
+            {
+                radianite: radianite,
+                valorantPoints: valorantPoints
+            }
+        );
+
+    }
+
+    const initPlayerCard = async () => {
+
+        let playerCardID = '';
+        let playerCard = '';
+
+        const playerLoadout = await getPlayerLoadout(
+            authState.shard,
+            authState.puuid,
+            authState.entitlement,
+            authState.token
+        );
+
+        if (playerLoadout !== null){
+            playerCardID = playerLoadout.Identity.PlayerCardID;
+            playerCard = await getPlayerCard(playerCardID);
+            setPlayerCard(playerCard.data.smallArt);
+        }
+    }
+
+    const initPlayerName = async () => {
+
+        let displayName = '';
+        let tagLine = '';
+
+        console.log(
+            'shard: ' + authState.shard +
+            'entitlement: ' + authState.entitlement +
+            'authToken: ' + authState.token
+        );
+
+        const playerInfo = await fetchPlayerInfo(authState.token);
+
+        if(playerInfo !== null){
+            displayName = playerInfo.acct.game_name;
+            tagLine = playerInfo.acct.tag_line;
+
+            setPlayerName({
+                name: displayName,
+                tag: tagLine
+            });
+        }
+    }
+
+    useEffect(() => {
+
+        console.log('this runs');
+
+        if (authState.isSigned){
+            initWallet();
+            initPlayerCard();
+            initPlayerName();
+        }
+
+        return () => {};
+    }, [authState])
+
+    const swipeButton = [
+        <TouchableHighlight style={{ height: 70 }} onPress={logout}>
+
+            <Text
+                style={{
+                    color: "gray",
+                    fontWeight: "bold",
+                    marginTop: 25,
+                    marginLeft: "2.5%",
+                }}>Logout</Text>
+
+        </TouchableHighlight>
+    ];
+
     return(
         <View style={styles.page}>
             <View style={styles.container}>
 
                 <View style={header.container}>
-                    <Text style={header.title}>Accounts</Text>
+                    <Text style={header.title}>Account</Text>
                 </View>
 
                 <View style={styles.thinLine}></View>
 
                 <View style={accounts.container}>
-                    <ScrollView>
+                    <View>
 
                         <Swipeable
                             contentContainerStyle={[accounts.accountContainer, {backgroundColor: "#363636"}]}
-                            leftContent={leftContent}
                             rightButtons={swipeButton}>
 
                             <View style={[accounts.imageContainer, {}]}>
                                 <ImageBackground
                                     style={[accounts.image, {}]}
                                     source={{
-                                        uri: "https://media.valorant-api.com/playercards/33c1f011-4eca-068c-9751-f68c788b2eee/displayicon.png"
+                                        // uri: "https://media.valorant-api.com/playercards/33c1f011-4eca-068c-9751-f68c788b2eee/displayicon.png"
+                                        uri: playerCard
                                     }}>
                                 </ImageBackground>
                             </View>
 
                             <View style={accounts.textContainer}>
-                                <Text style={[accounts.text, {color: "tomato"}]}>her jett</Text>
-                                <Text style={[accounts.tag, {color: "gray"}]}>#luvu</Text>
+                                <Text style={[accounts.text, {color: "tomato"}]}>{playerName.name}</Text>
+                                <Text style={[accounts.tag, {color: "gray"}]}>#{playerName.tag}</Text>
                             </View>
 
                             <Ionicons
@@ -60,76 +163,32 @@ const Accounts = () => {
 
                         </Swipeable>
 
-                        <Swipeable
-                            contentContainerStyle={[accounts.accountContainer, {backgroundColor: "rgb(25,25,25)"}]}
-                            leftContent={leftContent}
-                            rightButtons={swipeButton}>
+                    </View>
 
-                            <View style={[accounts.imageContainer, {}]}>
-                                <ImageBackground
-                                    style={[accounts.image, {}]}
-                                    source={{
-                                        uri: "https://media.valorant-api.com/playercards/475ce7c1-4ddc-63aa-7e22-54bb621d615b/wideart.png"
-                                    }}>
-                                </ImageBackground>
-                            </View>
+                    <View style={points.container}>
 
-                            <View style={accounts.textContainer}>
-                                <Text style={accounts.text}>Turkwaz</Text>
-                                <Text style={accounts.tag}>#olm33</Text>
-                            </View>
+                        <ImageBackground
+                            source={{ uri: 'https://media.valorant-api.com/currencies/85ad13f7-3d1b-5128-9eb2-7cd8ee0b5741/displayicon.png' }}
+                            style={{ flex: 1 }}
+                            imageStyle={points.image}
+                            resizeMode={"cover"}
+                        >
+                            <Text style={points.text}>{wallet.valorantPoints} VP</Text>
+                        </ImageBackground>
 
-                            <Ionicons
-                                name="ios-arrow-forward"
-                                size={22} color="gray"
-                                style={{ display: "undefined" }}
-                            />
+                        <ImageBackground
+                            source={{ uri: 'https://media.valorant-api.com/currencies/e59aa87c-4cbf-517a-5983-6e81511be9b7/displayicon.png' }}
+                            style={{ flex: 1 }}
+                            imageStyle={points.image}
+                            resizeMode={"cover"}
+                        >
+                            <Text style={points.text}>{wallet.radianite} R</Text>
+                        </ImageBackground>
 
-                        </Swipeable>
-
-                        <Swipeable
-                            contentContainerStyle={[accounts.accountContainer, {backgroundColor: "rgb(25,25,25)"}]}
-                            leftContent={leftContent}
-                            rightButtons={swipeButton}>
-
-                            <View style={[accounts.imageContainer, {}]}>
-                                <ImageBackground
-                                    style={[accounts.image, {}]}
-                                    source={{
-                                        uri: "https://media.valorant-api.com/playercards/2ee6d025-4aac-3a67-0f6e-dba827acc75f/displayicon.png"
-                                    }}>
-                                </ImageBackground>
-                            </View>
-
-                            <View style={accounts.textContainer}>
-                                <Text style={accounts.text}>PRNZE</Text>
-                                <Text style={accounts.tag}>#7284</Text>
-                            </View>
-
-                            <Ionicons
-                                name="ios-arrow-forward"
-                                size={22} color="gray"
-                                style={{ display: "undefined" }}
-                            />
-
-                        </Swipeable>
-
-                    </ScrollView>
+                    </View>
                 </View>
 
                 <View style={styles.thinLine}></View>
-
-                <View style={bottomButtons.container}>
-                    <View style={bottomButtons.buttonContainer}>
-                        <Ionicons name="ios-person-add-outline" size={30} color="white" />
-                        <Text style={bottomButtons.text}>Add Account</Text>
-                    </View>
-
-                    <View style={bottomButtons.buttonContainer}>
-                        <Ionicons style={bottomButtons.logoutIcon} name="ios-log-out-outline" size={30} color="white" />
-                        <Text style={bottomButtons.text}>Logout from all Accounts</Text>
-                    </View>
-                </View>
 
             </View>
         </View>
@@ -150,7 +209,7 @@ const styles = StyleSheet.create({
     },
     thinLine: {
         marginBottom: "5%",
-        marginTop: "5%",
+
         width: "100%",
         height: "0.2%",
         backgroundColor: "#515151",
@@ -217,6 +276,28 @@ const accounts = StyleSheet.create({
         fontSize: 13,
         color: "grey"
     },
+});
+
+const points = StyleSheet.create({
+    container: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        maxHeight: 100,
+        marginBottom: 20,
+    },
+    text: {
+        fontFamily: "Oswald_400Regular",
+        fontStyle: "normal",
+        alignSelf: 'center',
+        marginTop: '40%',
+        color: 'white',
+    },
+    image: {
+        resizeMode:'contain',
+        flex: 1,
+        maxHeight: '80%'
+    }
 });
 
 const bottomButtons = StyleSheet.create({

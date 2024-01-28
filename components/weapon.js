@@ -2,9 +2,9 @@ import {Image, Pressable, StyleSheet, Text, View} from "react-native";
 import {useState} from "react";
 import SkinInfo from "./skin-info-modal";
 
-const VPEmblem = "C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\icons\\VPEmblem.png";
+const VPEmblem = "https://media.valorant-api.com/currencies/85ad13f7-3d1b-5128-9eb2-7cd8ee0b5741/displayicon.png";
 
-const Weapon = ({ image, price, name, color }) => {
+const Weapon = ({ image, price, name, color, showVP = true }) => {
     const [isModalVisible, setModalVisible] = useState(false);
 
     const onModalOpen = () => {
@@ -26,11 +26,11 @@ const Weapon = ({ image, price, name, color }) => {
             <Image style={styles.image} source={image}/>
 
             <View style={info.container }>
-                <Image style={info.image} source={require(VPEmblem)}/>
+                { showVP === true ? <Image style={info.image} source={{ uri: VPEmblem }}/> : null }
                 <Text style={info.text}>{price}<Text> {name}</Text></Text>
             </View>
 
-            <SkinInfo onModalClose={onModalClose} isModalVisible={isModalVisible}></SkinInfo>
+            <SkinInfo onModalClose={onModalClose} isModalVisible={isModalVisible} skinName={name} ></SkinInfo>
         </Pressable>
     );
 }
@@ -44,7 +44,8 @@ const styles = StyleSheet.create({
     },
     image: {
         resizeMode:'contain',
-        width: "100%",
+         width: "100%",
+        aspectRatio: 2,
     },
 });
 
@@ -58,8 +59,8 @@ const info = StyleSheet.create({
         bottom: "2%",
     },
     image: {
-        width: "5%",
-        height: "100%",
+        resizeMode:'contain',
+        width: '4.5%'
     },
     text: {
         left: "25%",

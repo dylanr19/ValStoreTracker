@@ -10,16 +10,133 @@ import {
     ImageBackground,
 } from 'react-native';
 import Weapon from "./weapon";
-import {useState} from "react";
+import {useContext, useEffect, useState} from "react";
+import {Auth} from "./auth";
+import {
+    getBundleDurationInSeconds,
+    getBundleImage,
+    getBundleSkins,
+    getBundleTitle,
+    getStorePrice
+} from "../api/StoreService";
 
 const Bundle = () => {
+    const { authState } = useContext(Auth);
     const [scrollY] = useState(new Animated.Value(0));
+    const [ weaponComponents, setWeaponComponents ] = useState([]);
+    const [ banner, setBanner ] = useState('');
+    const [ title, setTitle ] = useState('');
 
     const headerHeight = scrollY.interpolate({
         inputRange: [0, 200], // Adjust the range as needed
         outputRange: ["30%", "0%"], // Initial and final height of the header
         extrapolate: 'clamp',
     });
+
+    const [durationRemainingInSeconds, setDurationRemainingInSeconds] = useState(0);
+    const [durationRemainingInTime, setDurationRemainingInTime] = useState('00:00:00:00');
+    const updateTimer = () => {
+
+        setDurationRemainingInSeconds(durationRemainingInSeconds - 1);
+    }
+
+    useEffect(() => {
+
+        convertDurationInSecondsToTime();
+
+    }, [durationRemainingInSeconds])
+
+    const convertDurationInSecondsToTime = () => {
+
+        const days = Math.floor(durationRemainingInSeconds / (60 * 60 * 24));
+        const hours = Math.floor((durationRemainingInSeconds % (60 * 60 * 24)) / (60 * 60));
+        const minutes = Math.floor((durationRemainingInSeconds % (60 * 60)) / 60);
+        const seconds = durationRemainingInSeconds % 60;
+
+        const formattedTime = `${days}:${hours}:${minutes}:${seconds}`;
+
+        setDurationRemainingInTime(formattedTime);
+    }
+
+    useEffect(() => {
+
+        const fetchDuration = async () => {
+            const durationInSeconds = await getBundleDurationInSeconds(
+                authState.shard,
+                authState.puuid,
+                authState.entitlement,
+                authState.token
+            );
+
+            setDurationRemainingInSeconds(durationInSeconds);
+        }
+
+        fetchDuration();
+
+        return () => {};
+    }, [authState]);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+                updateTimer();
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, [durationRemainingInSeconds]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            if (authState.isSigned === true){
+                const fetchedSkins = await getBundleSkins(
+                    authState.shard,
+                    authState.puuid,
+                    authState.entitlement,
+                    authState.token
+                );
+
+                const weaponComponents = [];
+
+                for (const skin of fetchedSkins) {
+                    const price = await getStorePrice(
+                        authState.shard,
+                        authState.puuid,
+                        authState.entitlement,
+                        authState.token,
+                        skin.levels[0].uuid,
+                    );
+
+                    weaponComponents.push(
+                        <Weapon
+                            name={skin.displayName}
+                            price={price}
+                            color={"#212121"}
+                            image={{ uri: skin.displayIcon }}>
+                        </Weapon>
+                    );
+                }
+
+                setBanner(await getBundleImage(
+                    authState.shard,
+                    authState.puuid,
+                    authState.entitlement,
+                    authState.token
+                ));
+
+                setTitle(await getBundleTitle(
+                    authState.shard,
+                    authState.puuid,
+                    authState.entitlement,
+                    authState.token
+                ));
+
+                setWeaponComponents(weaponComponents);
+            }
+        }
+
+        fetchData();
+
+        return () => {};
+    }, [authState]);
 
     return(
         <View style={styles.container}>
@@ -29,11 +146,11 @@ const Bundle = () => {
                     <LinearGradient style={styles.headerImg} colors={['#FFFFFF', '#FFFFFF00']} start={{x: 0, y: 0.82}} end={{x: 0, y: 0.95}} ></LinearGradient>
                 }>
                     <ImageBackground style={styles.headerImg} source={
-                        require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\images\\promo-image.png")
+                        { uri: banner}
                     }>
                         <View style={styles.headerTextContainer}>
-                            <Text style={styles.headerFeaturedText}>FEATURED | <Text style={{color: "#71FF5A"}}>00:00:00:00</Text></Text>
-                            <Text style={styles.headerText}>VALIANT HERO{"\n"}COLLECTION</Text>
+                            <Text style={styles.headerFeaturedText}>FEATURED | <Text style={{color: "#71FF5A"}}>{durationRemainingInTime}</Text></Text>
+                            <Text style={styles.headerText}>{title.toUpperCase()}{"\n"}COLLECTION</Text>
                         </View>
 
                     </ImageBackground>
@@ -46,42 +163,12 @@ const Bundle = () => {
                     scrollEventThrottle={16}
                     onScroll={Animated.event([
                         { nativeEvent: { contentOffset: { y: scrollY } } },
-                    ])}
+                    ],{ useNativeDriver: false })}
                 >
-                        <Weapon
-                            name={"Vandal"}
-                            price={"1775"}
-                            color={"#212121"}
-                            image={require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\images\\vandal.png")}>
-                        </Weapon>
 
-                        <Weapon
-                            name={"Operator"}
-                            price={"1775"}
-                            color={"#212121"}
-                            image={require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\images\\awp.png")}>
-                        </Weapon>
-
-                        <Weapon
-                            name={"Ares"}
-                            price={"1775"}
-                            color={"#212121"}
-                            image={require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\images\\ares.png")}>
-                        </Weapon>
-
-                        <Weapon
-                            name={"Ghost"}
-                            price={"1775"}
-                            color={"#212121"}
-                            image={require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\images\\ghost.png")}>
-                        </Weapon>
-
-                        <Weapon
-                            name={"Knife"}
-                            price={"1775"}
-                            color={"#212121"}
-                            image={require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\images\\melee.png")}>
-                        </Weapon>
+                    {weaponComponents.map(weapon => (
+                        <View key={weapon.uuid}>{weapon}</View>
+                    ))}
 
                 </ScrollView>
 

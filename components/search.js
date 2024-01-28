@@ -1,9 +1,94 @@
-import { StyleSheet, View, ScrollView, } from 'react-native';
+import {StyleSheet, View, ScrollView, FlatList,} from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import {Feather,} from "@expo/vector-icons";
 import Weapon from "./weapon";
+import {useContext, useEffect, useState} from "react";
+import { Auth } from "./auth";
+import {getPlayerLoadout, getSkinByUuid} from "../api/StoreService";
 
 const Search = () => {
+
+    const [ initialLoadout, setInitialLoadout] = useState([]);
+    const [ currentLoadout, setCurrentLoadout ] = useState([]);
+    const [ searchState, setSearchState] = useState('');
+    const { authState } = useContext(Auth);
+
+    const updateSearch = (search) => {
+        setSearchState(search);
+    }
+
+    const handleSearch = () => {
+
+        if (searchState === '')
+        {
+            setCurrentLoadout(initialLoadout);
+        }
+        else
+        {
+            const matchedSkins = [];
+
+            initialLoadout.forEach((skin) => {
+                if(skin.displayName.includes(searchState)){
+                    matchedSkins.push(skin);
+                }
+            });
+
+            setCurrentLoadout(matchedSkins);
+        }
+    }
+
+    const initScrollView = async () => {
+
+        const playerLoadout = await getPlayerLoadout(
+            authState.shard,
+            authState.puuid,
+            authState.entitlement,
+            authState.token
+        );
+
+        const gunIDObjects = playerLoadout.Guns;
+        const guns = [];
+
+        for (const gunIds of gunIDObjects) {
+            const skin = await getSkinByUuid(gunIds.SkinID);
+
+            guns.push({
+                displayName: skin.data.displayName,
+                displayIcon: skin.data.chromas[0].fullRender
+            });
+        }
+
+        setInitialLoadout(guns);
+        setCurrentLoadout(guns);
+    }
+
+    useEffect(() => {
+
+        if (authState.isSigned){
+            initScrollView();
+        }
+
+        return () => {};
+    }, [authState]);
+
+    useEffect(() => {
+
+        handleSearch();
+
+        return () => {};
+    }, [searchState])
+
+    const renderItem = ({ item }) => (
+        <Weapon
+            key={item.displayName}
+            name={item.displayName}
+            price={""}
+            color={"#212121"}
+            image={{ uri: item.displayIcon }}
+            showVP={false}
+        >
+        </Weapon>
+    );
 
     return(
         <View style={styles.container}>
@@ -12,43 +97,22 @@ const Search = () => {
 
                 <SearchBar containerStyle={info.header}
                            inputContainerStyle={info.inputContainer}
+                           inputStyle={ { color: 'white' } }
                            placeholderTextColor="white" searchIcon={info.inputContainer}
-                           platform="ios" placeholder= "Search"
+                           platform="ios" placeholder= "Search" onChangeText={updateSearch}
+                           value={searchState}
                 ></SearchBar>
-
-                <Feather
-                    name="filter"
-                    size={24}
-                    color="white"
-                    style={styles.headerFilterIcon}
-                />
 
             </View>
 
-            <ScrollView style={styles.weaponsContainer}>
-
-                <Weapon
-                    name={"Monkey Vandal"}
-                    price={"1775"}
-                    color={"#212121"}
-                    image={require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\images\\vandal.png")}>
-                </Weapon>
-
-                <Weapon
-                    name={"Lux Ghost"}
-                    price={"1775"}
-                    color={"#212121"}
-                    image={require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\images\\ghost-lux.png")}>
-                </Weapon>
-
-                <Weapon
-                    name={"Monkey Knife"}
-                    price={"1775"}
-                    color={"#212121"}
-                    image={require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\images\\melee.png")}>
-                </Weapon>
-
-            </ScrollView>
+            {currentLoadout && (
+             <FlatList
+                 style={styles.weaponsContainer}
+                 data={currentLoadout}
+                 renderItem={renderItem}
+                 keyExtractor={(item) => item.displayName}
+             ></FlatList>
+            )}
 
         </View>
     );
@@ -100,8 +164,7 @@ const styles = StyleSheet.create({
 
 const info = StyleSheet.create({
     header: {
-        flex: 0.9,
-        marginLeft: "3%",
+        flex: 1,
         backgroundColor: "#121212",
     },
     inputContainer: {

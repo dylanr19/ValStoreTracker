@@ -33,7 +33,7 @@ const AppSettings = () => {
                     containerStyle={account.name}
                     titleStyle={styles.settingText}
                     title={"Account Name"}
-                    value={"turkwaz33"}>
+                    value={"test"}>
                 </SettingsEditText>
 
                 <SettingsDividerShort
@@ -49,23 +49,23 @@ const AppSettings = () => {
                     value={true}>
                 </SettingsSwitch>
 
-                <SettingsPicker
-                    containerStyle={account.switch}
-                    titleStyle={styles.settingText}
-                    title={"Switch Accounts"}>
-                </SettingsPicker>
+                {/*<SettingsPicker*/}
+                {/*    containerStyle={account.switch}*/}
+                {/*    titleStyle={styles.settingText}*/}
+                {/*    title={"Switch Accounts"}>*/}
+                {/*</SettingsPicker>*/}
 
-                <SettingsDividerShort
-                    dividerStyle={dividerShort.line}
-                    containerStyle={dividerShort.container}
-                    ios={true}>
-                </SettingsDividerShort>
+                {/*<SettingsDividerShort*/}
+                {/*    dividerStyle={dividerShort.line}*/}
+                {/*    containerStyle={dividerShort.container}*/}
+                {/*    ios={true}>*/}
+                {/*</SettingsDividerShort>*/}
 
-                <SettingsButton
-                    containerStyle={account.Logout}
-                    titleStyle={styles.settingText}
-                    title={"Logout All"}>
-                </SettingsButton>
+                {/*<SettingsButton*/}
+                {/*    containerStyle={account.Logout}*/}
+                {/*    titleStyle={styles.settingText}*/}
+                {/*    title={"Logout All"}>*/}
+                {/*</SettingsButton>*/}
 
                 <SettingsSwitch
                     containerStyle={styles.showNotifications}
