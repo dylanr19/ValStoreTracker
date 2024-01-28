@@ -4,16 +4,11 @@ import {ResizeMode, Video} from "expo-av";
 import {useEffect, useState} from "react";
 import { fetchSkinByName } from '../api/StoreService';
 import Swiper from "react-native-swiper";
-import Bundle from "./Bundle";
-import Daily from "./daily";
 
 const SkinInfo = ({ isModalVisible, onModalClose, skinName }) => {
     const [chromaVideos, setChromaVideos] = useState([]);
     const [levelVideos, setLevelVideos] = useState([]);
     const [images, setImages] = useState([]);
-
-    const [hideChromaSwiper, setHideChromaSwiper] = useState(false);
-    const [hideLevelSwiper, setHideLevelSwiper] = useState(false);
 
      const placeholder =
          <View key={skinName} style={styles.video}>
@@ -28,14 +23,6 @@ const SkinInfo = ({ isModalVisible, onModalClose, skinName }) => {
         const images = [];
         const chromaVideos = [];
         const levelVideos = [];
-
-        if(skin.chromas.find(c => c.streamedVideo !== null) === undefined){
-            setHideChromaSwiper(true);
-        }
-
-        if (skin.levels.find(l => l.streamedVideo !== null) === undefined){
-            setHideLevelSwiper(true);
-        }
 
         skin.chromas.forEach(c => {
             images.push(
@@ -170,11 +157,9 @@ const styles = StyleSheet.create({
     },
     video: {
          flex: 1,
-        // backgroundColor: "red",
     },
     skinContainer: {
         flex: 5,
-        // backgroundColor: "green",
     },
     swatchContainer: {
         flex: 0.12,

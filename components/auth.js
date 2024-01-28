@@ -1,19 +1,5 @@
-import React, {createContext, useState, useEffect, useReducer, useMemo} from 'react';
-import {View} from "react-native";
+import React, {createContext, useState, useEffect} from 'react';
 import {authenticate} from "../api/AuthService";
-import {fetchStoreFrontV2, fetchWeaponSkins, getBundleSkins, getValiantSkinsTEST} from "../api/StoreService";
-
-// const fetchV2Store = (shard, puuid, entitlementToken, authToken) =>
-// {
-//     fetch(`https://pd.${shard}.a.pvp.net/store/v2/storefront/${puuid}`, {
-//         method: "GET",
-//         headers: {
-//             "X-Riot-Entitlements-JWT": entitlementToken,
-//             "Authorization": `Bearer ${authToken}`
-//         }
-//     }).then(response => response.json())
-//         .then(data => {console.log(JSON.stringify(data, null, 2));})
-// }
 
 export const Auth = createContext(null);
 

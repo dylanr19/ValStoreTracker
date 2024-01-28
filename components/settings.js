@@ -18,7 +18,7 @@ const AppSettings = () => {
         gender: " "
     });
 
-    const { username, allowPushNotifications, gender } = state;
+    const { allowPushNotifications } = state;
 
     return(
         <View style={styles.container}>
@@ -32,7 +32,7 @@ const AppSettings = () => {
                 <SettingsEditText
                     containerStyle={account.name}
                     titleStyle={styles.settingText}
-                    title={"Account Name"}
+                    title={"Test"}
                     value={"test"}>
                 </SettingsEditText>
 
@@ -45,27 +45,9 @@ const AppSettings = () => {
                 <SettingsSwitch
                     containerStyle={account.remember}
                     titleStyle={styles.settingText}
-                    title={"Remember Account"}
+                    title={"Stay logged in"}
                     value={true}>
                 </SettingsSwitch>
-
-                {/*<SettingsPicker*/}
-                {/*    containerStyle={account.switch}*/}
-                {/*    titleStyle={styles.settingText}*/}
-                {/*    title={"Switch Accounts"}>*/}
-                {/*</SettingsPicker>*/}
-
-                {/*<SettingsDividerShort*/}
-                {/*    dividerStyle={dividerShort.line}*/}
-                {/*    containerStyle={dividerShort.container}*/}
-                {/*    ios={true}>*/}
-                {/*</SettingsDividerShort>*/}
-
-                {/*<SettingsButton*/}
-                {/*    containerStyle={account.Logout}*/}
-                {/*    titleStyle={styles.settingText}*/}
-                {/*    title={"Logout All"}>*/}
-                {/*</SettingsButton>*/}
 
                 <SettingsSwitch
                     containerStyle={styles.showNotifications}

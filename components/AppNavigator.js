@@ -1,10 +1,8 @@
 import React, {useContext} from 'react';
-import {View} from "react-native";
 import {Ionicons} from "@expo/vector-icons";
 import Shop from "./shop";
 import Accounts from "./accounts";
 import Search from "./search";
-import WishList from "./wish-list";
 import AppSettings from "./settings";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {NavigationContainer} from "@react-navigation/native";
@@ -45,7 +43,6 @@ function TabNavigator(){
             <Tab.Screen name="Store" component={Shop} />
             <Tab.Screen name="Account" component={Accounts} />
             <Tab.Screen name="Loadout" component={Search} />
-            {/*<Tab.Screen name="Wish List" component={WishList} />*/}
             <Tab.Screen name="Settings" component={AppSettings}/>
 
         </Tab.Navigator>

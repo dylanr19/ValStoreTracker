@@ -6,12 +6,13 @@ import {
     Text,
     View,
     ScrollView,
-    Image,
     ImageBackground,
 } from 'react-native';
+
 import Weapon from "./weapon";
 import {useContext, useEffect, useState} from "react";
 import {Auth} from "./auth";
+
 import {
     getBundleDurationInSeconds,
     getBundleImage,

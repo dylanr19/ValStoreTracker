@@ -1,6 +1,5 @@
-import React, {useState} from "react";
 import Swiper from 'react-native-swiper';
-import {View, StyleSheet, Text} from "react-native";
+import { Text} from "react-native";
 import Bundle from "./Bundle";
 import Daily from "./daily";
 

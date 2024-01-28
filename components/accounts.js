@@ -2,23 +2,16 @@ import {
     View,
     StyleSheet,
     Text,
-    Image,
-    ScrollView,
     ImageBackground,
     TouchableHighlight,
-    Button,
-    Pressable
 } from "react-native";
+
 import React, {useEffect, useState, useContext} from "react";
 import {Ionicons} from "@expo/vector-icons";
 import Swipeable from 'react-native-swipeable';
 import {getPlayerCard, getPlayerLoadout, getWallet} from "../api/StoreService";
-import auth, {Auth} from "./auth";
-import {fetchNameService} from "../api/NameService";
+import {Auth} from "./auth";
 import {fetchPlayerInfo} from "../api/AuthService";
-
-
-const leftContent = <Text>Pull to activate</Text>;
 
 const Accounts = () => {
 
@@ -144,7 +137,6 @@ const Accounts = () => {
                                 <ImageBackground
                                     style={[accounts.image, {}]}
                                     source={{
-                                        // uri: "https://media.valorant-api.com/playercards/33c1f011-4eca-068c-9751-f68c788b2eee/displayicon.png"
                                         uri: playerCard
                                     }}>
                                 </ImageBackground>
@@ -229,18 +221,6 @@ const header = StyleSheet.create({
     },
 });
 
-const name = StyleSheet.create({
-    container: {
-        flex: 0.12,
-        justifyContent: "flex-end",
-        marginBottom: "3%",
-    },
-    text: {
-        fontSize: 15,
-        color: "#A9A9A9",
-    },
-});
-
 const accounts = StyleSheet.create({
     container: {
         flex: 1,
@@ -298,26 +278,6 @@ const points = StyleSheet.create({
         flex: 1,
         maxHeight: '80%'
     }
-});
-
-const bottomButtons = StyleSheet.create({
-    container: {
-        flex: 0.5,
-    },
-    buttonContainer: {
-        flexDirection: "row",
-        marginBottom: "2%",
-    },
-    logoutIcon: {
-        marginLeft: "1%",
-        marginRight: "-1%"
-    },
-    text: {
-        marginTop: "2%",
-        marginLeft: "10%",
-        color: "white",
-        fontWeight: "500",
-    },
 });
 
 export default Accounts;

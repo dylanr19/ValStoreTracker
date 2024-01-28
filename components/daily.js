@@ -3,12 +3,13 @@ import { LinearGradient } from "expo-linear-gradient";
 import {StyleSheet, Text, View, ScrollView, ImageBackground, Animated} from 'react-native';
 import Weapon from "./weapon";
 import {useContext, useEffect, useState} from "react";
+
 import {
-    getBundleDurationInSeconds,
     getSingleSkinsDurationInSeconds,
     getSkinOffers,
     getStorePrice
 } from "../api/StoreService";
+
 import {Auth} from "./auth";
 
 const Daily = () => {
