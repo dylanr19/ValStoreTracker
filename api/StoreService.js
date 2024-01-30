@@ -29,14 +29,14 @@ export const getSkinByUuid = async (weaponSkinUuid) => {
 
 }
 
-export const fetchStoreFrontV2 = async (shard, puuid, entitlement, authToken) =>
+export const fetchStoreFrontV2 = async (auth) =>
 {
     try {
-        const response = await fetch(`https://pd.${shard}.a.pvp.net/store/v2/storefront/${puuid}`, {
+        const response = await fetch(`https://pd.${auth.shard}.a.pvp.net/store/v2/storefront/${auth.puuid}`, {
             method: 'GET',
             headers: {
-                'X-Riot-Entitlements-JWT': entitlement,
-                'Authorization': `Bearer ${authToken}`
+                'X-Riot-Entitlements-JWT': auth.entitlement,
+                'Authorization': `Bearer ${auth.token}`
             }
         });
 
@@ -50,10 +50,10 @@ export const fetchStoreFrontV2 = async (shard, puuid, entitlement, authToken) =>
     }
 }
 
-export const getBundleSkins = async (shard, puuid, entitlement, authToken) => {
+export const getBundleSkins = async (auth) => {
 
     const skins = await fetchSkins();
-    const storeFront = await fetchStoreFrontV2(shard, puuid, entitlement, authToken);
+    const storeFront = await fetchStoreFrontV2(auth);
     const bundleItems = storeFront.FeaturedBundle.Bundle.Items;
 
     const bundleSkins = [];
@@ -71,21 +71,21 @@ export const getBundleSkins = async (shard, puuid, entitlement, authToken) => {
     return bundleSkins;
 }
 
-export const getBundleDurationInSeconds = async (shard, puuid, entitlement, authToken) => {
+export const getBundleDurationInSeconds = async (auth) => {
 
-    const storeFront = await fetchStoreFrontV2(shard, puuid, entitlement, authToken);
+    const storeFront = await fetchStoreFrontV2(auth);
     return storeFront.FeaturedBundle.Bundle.DurationRemainingInSeconds;
 }
 
-export const getSingleSkinsDurationInSeconds = async (shard, puuid, entitlement, authToken) => {
+export const getSingleSkinsDurationInSeconds = async (auth) => {
 
-    const storeFront = await fetchStoreFrontV2(shard, puuid, entitlement, authToken);
+    const storeFront = await fetchStoreFrontV2(auth);
     return storeFront.SkinsPanelLayout.SingleItemOffersRemainingDurationInSeconds;
 }
 
-export const getStorePrice = async (shard, puuid, entitlement, authToken, itemID) => {
+export const getStorePrice = async (auth, itemID) => {
 
-    const storeFront = await fetchStoreFrontV2(shard, puuid, entitlement, authToken);
+    const storeFront = await fetchStoreFrontV2(auth);
     const bundleItems = storeFront.FeaturedBundle.Bundle.Items;
     const singleItems = storeFront.SkinsPanelLayout.SingleItemStoreOffers;
 
@@ -109,10 +109,10 @@ export const getStorePrice = async (shard, puuid, entitlement, authToken, itemID
     return price;
 }
 
-export const getSkinOffers = async (shard, puuid, entitlement, authToken) => {
+export const getFeaturedSkinOffers = async (auth) => {
 
     const skins = await fetchSkins();
-    const storefront = await fetchStoreFrontV2(shard, puuid, entitlement, authToken);
+    const storefront = await fetchStoreFrontV2(auth);
     const offers = storefront.SkinsPanelLayout.SingleItemOffers;
     console.log(offers);
 
@@ -131,14 +131,14 @@ export const getSkinOffers = async (shard, puuid, entitlement, authToken) => {
     return offerSkins;
 }
 
-export const getPlayerLoadout = async(shard, puuid, entitlement, authToken) => {
+export const getPlayerLoadout = async(auth) => {
 
     try {
-        const response = await fetch(`https://pd.${shard}.a.pvp.net/personalization/v2/players/${puuid}/playerloadout`, {
+        const response = await fetch(`https://pd.${auth.shard}.a.pvp.net/personalization/v2/players/${auth.puuid}/playerloadout`, {
             method: 'GET',
             headers: {
-                'X-Riot-Entitlements-JWT': entitlement,
-                'Authorization': `Bearer ${authToken}`
+                'X-Riot-Entitlements-JWT': auth.entitlement,
+                'Authorization': `Bearer ${auth.token}`
             }
         });
 
@@ -153,14 +153,14 @@ export const getPlayerLoadout = async(shard, puuid, entitlement, authToken) => {
 
 }
 
-export const getWallet = async (shard, puuid, entitlement, authToken) => {
+export const getWallet = async (auth) => {
 
     try{
-        const response = await fetch(`https://pd.${shard}.a.pvp.net/store/v1/wallet/${puuid}`, {
+        const response = await fetch(`https://pd.${auth.shard}.a.pvp.net/store/v1/wallet/${auth.puuid}`, {
             method: 'GET',
             headers: {
-                'X-Riot-Entitlements-JWT': entitlement,
-                'Authorization': `Bearer ${authToken}`
+                'X-Riot-Entitlements-JWT': auth.entitlement,
+                'Authorization': `Bearer ${auth.token}`
             }
         });
 
@@ -193,9 +193,9 @@ export const getPlayerCard = async(playerCardID) => {
 
 }
 
-export const getBundleImage = async (shard, puuid, entitlement, authToken) => {
+export const getBundleImage = async (auth) => {
 
-    const storefront = await fetchStoreFrontV2(shard, puuid, entitlement, authToken);
+    const storefront = await fetchStoreFrontV2(auth);
     const bannerID = storefront.FeaturedBundle.Bundle.DataAssetID;
     let bundle = {};
 
@@ -215,9 +215,9 @@ export const getBundleImage = async (shard, puuid, entitlement, authToken) => {
     return bundle.data.displayIcon;
 }
 
-export const getBundleTitle = async (shard, puuid, entitlement, authToken) => {
+export const getBundleTitle = async (auth) => {
 
-    const storefront = await fetchStoreFrontV2(shard, puuid, entitlement, authToken);
+    const storefront = await fetchStoreFrontV2(auth);
     const bannerID = storefront.FeaturedBundle.Bundle.DataAssetID;
     let bundle = {};
 

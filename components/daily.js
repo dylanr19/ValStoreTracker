@@ -1,152 +1,86 @@
-import MaskedView from "@react-native-masked-view/masked-view";
-import { LinearGradient } from "expo-linear-gradient";
-import {StyleSheet, Text, View, ScrollView, ImageBackground, Animated} from 'react-native';
-import Weapon from "./weapon";
+import {StyleSheet, Text, View, Animated} from 'react-native';
 import {useContext, useEffect, useState} from "react";
-
-import {
-    getSingleSkinsDurationInSeconds,
-    getSkinOffers,
-    getStorePrice
-} from "../api/StoreService";
-
+import {getSingleSkinsDurationInSeconds, getFeaturedSkinOffers, getStorePrice} from "../api/StoreService";
 import {Auth} from "./auth";
+import Timer from "./timer";
+import Weapons from "./weapons";
+import StoreHeader from "./storeHeader";
 
-const Daily = () => {
+const Daily = ({ isForeground }) => {
+
     const { authState } = useContext(Auth);
     const [scrollY] = useState(new Animated.Value(0));
     const [ weaponComponents, setWeaponComponents ] = useState([]);
+    const [duration, setDuration] = useState(0); // the remaining time in seconds until the storefront expires
+    const banner = require('C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\images\\valo-menu-background.jpeg');
 
     const headerHeight = scrollY.interpolate({
        inputRange: [0, 100],
-       outputRange: ["30%", "0%"],
+       outputRange: ["30%", "3%"],
        extrapolate: 'clamp'
     });
 
-    const [durationRemainingInSeconds, setDurationRemainingInSeconds] = useState(0);
-    const [durationRemainingInTime, setDurationRemainingInTime] = useState('00:00:00:00');
-    const updateTimer = () => {
+    const fetchDuration = async () => {
 
-        setDurationRemainingInSeconds(durationRemainingInSeconds - 1);
-    }
-
-    useEffect(() => {
-
-        convertDurationInSecondsToTime();
-
-    }, [durationRemainingInSeconds])
-
-    const convertDurationInSecondsToTime = () => {
-
-        const days = Math.floor(durationRemainingInSeconds / (60 * 60 * 24));
-        const hours = Math.floor((durationRemainingInSeconds % (60 * 60 * 24)) / (60 * 60));
-        const minutes = Math.floor((durationRemainingInSeconds % (60 * 60)) / 60);
-        const seconds = durationRemainingInSeconds % 60;
-
-        const formattedTime = `${days}:${hours}:${minutes}:${seconds}`;
-
-        setDurationRemainingInTime(formattedTime);
-    }
-
-    useEffect(() => {
-
-        const fetchDuration = async () => {
-            const durationInSeconds = await getSingleSkinsDurationInSeconds(
-                authState.shard,
-                authState.puuid,
-                authState.entitlement,
-                authState.token
-            );
-
-            setDurationRemainingInSeconds(durationInSeconds);
+        if(!authState.isSigned && !isForeground){
+            return;
         }
 
-        fetchDuration();
+        const durationInSeconds = await getSingleSkinsDurationInSeconds(
+            authState
+        );
 
-        return () => {};
-    }, [authState]);
+        setDuration(durationInSeconds);
+    }
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-            updateTimer();
-        }, 1000);
+    const fetchStoreData = async () => {
+        if (authState.isSigned === true){
 
-        return () => clearInterval(interval);
-    }, [durationRemainingInSeconds]);
+            const fetchedSkins = await getFeaturedSkinOffers(authState);
+            const weaponComponents = [];
 
-    useEffect(() => {
-        const fetchData = async () => {
-            if (authState.isSigned === true){
-                const fetchedSkins = await getSkinOffers(
-                    authState.shard,
-                    authState.puuid,
-                    authState.entitlement,
-                    authState.token
-                );
+            for (const skin of fetchedSkins) {
+                const price = await getStorePrice(authState, skin.levels[0].uuid,);
 
-                const weaponComponents = [];
-
-                for (const skin of fetchedSkins) {
-                    const price = await getStorePrice(
-                        authState.shard,
-                        authState.puuid,
-                        authState.entitlement,
-                        authState.token,
-                        skin.levels[0].uuid,
-                    );
-
-                    weaponComponents.push(
-                        <Weapon
-                            name={skin.displayName}
-                            price={price}
-                            color={"#212121"}
-                            image={{ uri: skin.displayIcon }}>
-                        </Weapon>
-                    );
-                }
-
-                setWeaponComponents(weaponComponents);
+                weaponComponents.push({
+                    displayName: skin.displayName,
+                    displayIcon: skin.displayIcon,
+                    price: price,
+                    color: "#212121",
+                    key: skin.uuid,
+                    showVP: true
+                });
             }
+
+            setWeaponComponents(weaponComponents);
         }
+    }
 
-        fetchData();
+    useEffect(() => {
+        if(authState.isSigned){
+            fetchDuration();
+        }
+        return () => {};
+    }, [authState, isForeground]);
 
+    useEffect(() => {
+        fetchStoreData();
         return () => {};
     }, [authState]);
+
+    const textComponent = () => {
+        return(
+            <View style={styles.headerTextContainer}>
+                <Text style={styles.headerText}>DAILY STORE</Text>
+                <Text style={styles.headerTimeText}><Timer timerState={duration} setTimerState={setDuration}></Timer></Text>
+            </View>
+        );
+    }
 
     return(
         <View style={styles.container}>
-
-            <Animated.View style={{ height: headerHeight }}>
-                <MaskedView maskElement={
-                    <LinearGradient style={styles.headerImg} colors={['#FFFFFF', '#FFFFFF00']} start={{x: 0, y: 0.82}} end={{x: 0, y: 0.95}} ></LinearGradient>
-                }>
-                    <ImageBackground style={styles.headerImg} source={
-                        require("C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\images\\valo-menu-background.jpeg")
-                    }>
-                        <View style={styles.headerTextContainer}>
-                            <Text style={styles.headerText}>DAILY STORE</Text>
-                            <Text style={styles.headerTimeText}>{durationRemainingInTime}</Text>
-                        </View>
-
-                    </ImageBackground>
-                </MaskedView>
-            </Animated.View>
-
-            <ScrollView
-                style={styles.weaponsContainer}
-                scrollEventThrottle={16}
-                onScroll={Animated.event([
-                    { nativeEvent: { contentOffset: { y: scrollY } } },
-                ],{ useNativeDriver: false })}
-            >
-
-                {weaponComponents.map(weapon => (
-                    <View key={weapon.uuid}>{weapon}</View>
-                ))}
-
-            </ScrollView>
-
+            <StoreHeader headerHeight={headerHeight} textComponent={textComponent()} imageStyle={styles.headerImg} banner={banner}/>
+            <Weapons weapons={weaponComponents} scrollY={scrollY} />
         </View>
     );
 }
@@ -160,9 +94,6 @@ const styles = StyleSheet.create({
         backgroundColor: "#070B0E",
         flexWrap: "nowrap",
         flexDirection: "column",
-    },
-    header: {
-        // flex: 0.5,
     },
     headerTextContainer: {
         flex: 1,
@@ -186,11 +117,6 @@ const styles = StyleSheet.create({
     headerImg: {
         width: "100%",
         height: "100%",
-    },
-    weaponsContainer: {
-        flex: 1,
-        marginBottom: "15%",
-        flexDirection: "column",
     },
 });
 

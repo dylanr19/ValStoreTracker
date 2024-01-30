@@ -1,10 +1,11 @@
-import {StyleSheet, View, ScrollView, FlatList,} from 'react-native';
+import {StyleSheet, View, ScrollView, FlatList, Animated,} from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import {Feather,} from "@expo/vector-icons";
 import Weapon from "./weapon";
 import {useContext, useEffect, useState} from "react";
 import { Auth } from "./auth";
 import {getPlayerLoadout, getSkinByUuid} from "../api/StoreService";
+import Weapons from "./weapons";
 
 const Search = () => {
 
@@ -13,18 +14,19 @@ const Search = () => {
     const [ searchState, setSearchState] = useState('');
     const { authState } = useContext(Auth);
 
+    // Store and display the user's search input in the search bar
     const updateSearch = (search) => {
         setSearchState(search);
     }
 
+    // (partly) match the user's search input with the displayName of certain weapons in the loadout
+    // and then displays these weapons
     const handleSearch = () => {
 
         if (searchState === '')
         {
             setCurrentLoadout(initialLoadout);
-        }
-        else
-        {
+        } else {
             const matchedSkins = [];
 
             initialLoadout.forEach((skin) => {
@@ -37,14 +39,10 @@ const Search = () => {
         }
     }
 
-    const initScrollView = async () => {
+    // initializes the FlatList with the user's loadout
+    const initFlatList = async () => {
 
-        const playerLoadout = await getPlayerLoadout(
-            authState.shard,
-            authState.puuid,
-            authState.entitlement,
-            authState.token
-        );
+        const playerLoadout = await getPlayerLoadout(authState);
 
         const gunIDObjects = playerLoadout.Guns;
         const guns = [];
@@ -62,33 +60,20 @@ const Search = () => {
         setCurrentLoadout(guns);
     }
 
+    // init the flatlist upon login
     useEffect(() => {
-
         if (authState.isSigned){
-            initScrollView();
+            initFlatList();
         }
-
         return () => {};
     }, [authState]);
 
+    // invokes handlesearch to match user search input with certain weapon names
+    // when search state changes / user typed in the search bar.
     useEffect(() => {
-
         handleSearch();
-
         return () => {};
     }, [searchState])
-
-    const renderItem = ({ item }) => (
-        <Weapon
-            key={item.displayName}
-            name={item.displayName}
-            price={""}
-            color={"#212121"}
-            image={{ uri: item.displayIcon }}
-            showVP={false}
-        >
-        </Weapon>
-    );
 
     return(
         <View style={styles.container}>
@@ -105,14 +90,7 @@ const Search = () => {
 
             </View>
 
-            {currentLoadout && (
-             <FlatList
-                 style={styles.weaponsContainer}
-                 data={currentLoadout}
-                 renderItem={renderItem}
-                 keyExtractor={(item) => item.displayName}
-             ></FlatList>
-            )}
+            <Weapons weapons={currentLoadout} />
 
         </View>
     );
@@ -129,36 +107,11 @@ const styles = StyleSheet.create({
         flexDirection: "column",
     },
     header: {
-        flex: 0.2,
+        height: "15%",
         width: "100%",
         flexDirection: "row",
         alignItems: "flex-end",
         alignSelf: "center",
-    },
-    headerFilterIcon: {
-        flex: 0.13,
-        marginLeft: "2%",
-        marginBottom: "6%",
-    },
-    weaponsContainer: {
-        flex: 1,
-        flexDirection: "column",
-    },
-    footer: {
-        height: "8%",
-        width: "100%",
-        flexDirection: "row",
-        justifyContent: "space-around",
-        paddingLeft: "5%",
-        paddingRight: "5%",
-        bottom: 0,
-        backgroundColor: "#363636",
-    },
-    footerIcon: {
-        width: "10%",
-        height: "40%",
-        marginTop: "3%",
-        flexWrap: "nowrap",
     },
 });
 

@@ -15,22 +15,19 @@ import {fetchPlayerInfo} from "../api/AuthService";
 
 const Accounts = () => {
 
+    const [playerCard, setPlayerCard] = useState('');
+    const [playerName, setPlayerName] = useState({ name: '', tag: '' });
+    const { logout, authState } = useContext(Auth);
+
     const [ wallet, setWallet ] = useState({
         valorantPoints: '',
         radianite: '',
     });
-    const [playerCard, setPlayerCard] = useState('');
-    const [playerName, setPlayerName] = useState({ name: '', tag: '' });
-
-    const { logout, authState } = useContext(Auth);
 
     const initWallet = async () => {
 
         const walletResponse = await getWallet(
-            authState.shard,
-            authState.puuid,
-            authState.entitlement,
-            authState.token
+            authState
         );
 
         const balances = walletResponse.Balances;
@@ -52,10 +49,7 @@ const Accounts = () => {
         let playerCard = '';
 
         const playerLoadout = await getPlayerLoadout(
-            authState.shard,
-            authState.puuid,
-            authState.entitlement,
-            authState.token
+            authState
         );
 
         if (playerLoadout !== null){
@@ -69,12 +63,6 @@ const Accounts = () => {
 
         let displayName = '';
         let tagLine = '';
-
-        console.log(
-            'shard: ' + authState.shard +
-            'entitlement: ' + authState.entitlement +
-            'authToken: ' + authState.token
-        );
 
         const playerInfo = await fetchPlayerInfo(authState.token);
 
@@ -102,7 +90,7 @@ const Accounts = () => {
         return () => {};
     }, [authState])
 
-    const swipeButton = [
+    const logoutButton = [
         <TouchableHighlight style={{ height: 70 }} onPress={logout}>
 
             <Text
@@ -131,7 +119,7 @@ const Accounts = () => {
 
                         <Swipeable
                             contentContainerStyle={[accounts.accountContainer, {backgroundColor: "#363636"}]}
-                            rightButtons={swipeButton}>
+                            rightButtons={logoutButton}>
 
                             <View style={[accounts.imageContainer, {}]}>
                                 <ImageBackground
