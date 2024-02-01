@@ -18,13 +18,13 @@ const AuthProvider = ({ children }) => {
         console.log(authState["isSigned"]);
     }, [authState]);
 
-    const login = async (accesToken, idToken) => {
+    const login = async (accesToken, idToken, shard) => {
         const auth = await authenticate(accesToken, idToken);
 
         setAuthState({
             isSigned: true,
             puuid: auth.puuid,
-            shard: auth.region,
+            shard: shard,
             token: auth.accessToken,
             entitlement: auth.entitlementsToken
         });
