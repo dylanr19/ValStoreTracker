@@ -55,6 +55,24 @@
 //     });
 // }
 
+// const CookieReauth = async () => {
+//     try {
+//         const response = await fetch('https://auth.riotgames.com/authorize?redirect_uri=https%3A%2F%2Fplayvalorant.com%2Fopt_in&client_id=play-valorant-web-prod&response_type=token%20id_token&nonce=1&scope=account%20openid', {
+//             method: 'GET',
+//         });
+//
+//         if (response.ok){
+//             return await response.json();
+//         }
+//
+//     }
+//     catch (error){
+//         console.log(error);
+//     }
+// }
+
+import {fetchNameService} from "./NameService";
+
 const fetchEntitlement = async (authToken) =>
 {
     try {
@@ -117,20 +135,27 @@ export const fetchPlayerInfo = async (accessToken) =>
 
 export const authenticate = async (accessToken, idToken) => {
 
+
     let jsonData = await fetchEntitlement(accessToken);
     jsonData = JSON.parse(JSON.stringify(jsonData));
     const entitlementsToken = jsonData.entitlements_token;
 
-    jsonData = await fetchRegion(accessToken, idToken);
-    const region = jsonData.affinities.live;
+    //jsonData = await fetchRegion(accessToken, idToken);
+
+    //console.log(jsonData);
+
+    //const region = jsonData.affinities.live;
 
     jsonData = await fetchPlayerInfo(accessToken);
     const puuid = jsonData.sub;
 
+    //const names = await fetchNameService('eu', entitlementsToken, accessToken, puuid);
+    // console.log('name');
+    // console.log(names);
+
     return {
         accessToken: accessToken,
         entitlementsToken: entitlementsToken,
-        region: region,
         puuid: puuid
     }
 }
