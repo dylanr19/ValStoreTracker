@@ -29,12 +29,12 @@ const AppSettings = () => {
 
             <ScrollView contentContainerStyle={styles.scrollviewContainer}>
 
-                <SettingsEditText
+                <SettingsSwitch
                     containerStyle={account.name}
                     titleStyle={styles.settingText}
-                    title={"Test"}
-                    value={"test"}>
-                </SettingsEditText>
+                    title={"Light Mode"}
+                    value={false}>
+                </SettingsSwitch>
 
                 <SettingsDividerShort
                     dividerStyle={dividerShort.line}
@@ -44,13 +44,6 @@ const AppSettings = () => {
 
                 <SettingsSwitch
                     containerStyle={account.remember}
-                    titleStyle={styles.settingText}
-                    title={"Stay logged in"}
-                    value={true}>
-                </SettingsSwitch>
-
-                <SettingsSwitch
-                    containerStyle={styles.showNotifications}
                     titleStyle={styles.settingText}
                     title={"Show Notifications"}
                     value={true}>
@@ -91,7 +84,7 @@ const styles = StyleSheet.create({
     showNotifications: {
         width: "90%",
         alignSelf: "center",
-        marginTop: "8%",
+        marginTop: "2%",
         minHeight: 42,
         borderRadius: 11,
         backgroundColor: "#212124",
