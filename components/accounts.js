@@ -12,6 +12,7 @@ import Swipeable from 'react-native-swipeable';
 import {getPlayerCard, getPlayerLoadout, getWallet} from "../api/StoreService";
 import {Auth} from "./auth";
 import {fetchPlayerInfo} from "../api/AuthService";
+import {fetchNameService} from "../api/NameService";
 
 const Accounts = () => {
 
@@ -61,25 +62,19 @@ const Accounts = () => {
 
     const initPlayerName = async () => {
 
-        let displayName = '';
-        let tagLine = '';
+        const playerInfo = await fetchNameService(authState);
 
-        const playerInfo = await fetchPlayerInfo(authState.token);
+        const displayName = playerInfo[0].GameName;
+        const tagLine = playerInfo[0].TagLine;
 
-        if(playerInfo !== null){
-            displayName = playerInfo.acct.game_name;
-            tagLine = playerInfo.acct.tag_line;
+        setPlayerName({
+            name: displayName,
+            tag: tagLine
+        });
 
-            setPlayerName({
-                name: displayName,
-                tag: tagLine
-            });
-        }
     }
 
     useEffect(() => {
-
-        console.log('this runs');
 
         if (authState.isSigned){
             initWallet();
@@ -228,7 +223,7 @@ const accounts = StyleSheet.create({
         width: "100%",
         height: "100%",
         resizeMode: "stretch",
-        backgroundColor: "red"
+        backgroundColor: "gray"
     },
     textContainer: {
         flex: 1,
