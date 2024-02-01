@@ -1,18 +1,23 @@
 
 
-export const fetchNameService = async (shard, entitlement, authToken) => {
+export const fetchNameService = async (auth) => {
 
     try {
-        const response = await fetch(`https://pd.${shard}.a.pvp.net/name-service/v2/players`, {
+        const response = await fetch(`https://pd.${auth.shard}.a.pvp.net/name-service/v2/players`, {
             method: 'PUT',
             headers: {
-                'X-Riot-Entitlements-JWT': entitlement,
-                'Authorization': `Bearer ${authToken}`
-            }
+                'Content-Type': 'application/json',
+                'X-Riot-Entitlements-JWT': auth.entitlement,
+                'Authorization': `Bearer ${auth.token}`
+            },
+            body: JSON.stringify([auth.puuid]),
         });
 
         if (response.ok){
             return await response.json();
+        }
+        else{
+            console.log(response);
         }
 
     }
