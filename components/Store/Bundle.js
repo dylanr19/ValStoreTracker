@@ -2,13 +2,17 @@ import {Animated} from "react-native";
 import {StyleSheet, Text, View,} from 'react-native';
 import StoreHeader from "./storeHeader";
 import {useContext, useEffect, useState} from "react";
-import {Auth} from "./auth";
-import {getBundleDurationInSeconds, getBundleImage, getBundleSkins, getBundleTitle, getStorePrice} from "../api/StoreService";
+import {AuthContext} from "../Contexts/authContext";
+import {getBundleDurationInSeconds, getBundleImage, getBundleSkins, getBundleTitle, getStorePrice} from "../../api/StoreService";
 import Timer from "./timer";
-import Weapons from "./weapons";
+import Weapons from "../Weapon/weapons";
+import {SettingsContext} from "../Contexts/settingsContext";
+import {ThemeContext} from "../Contexts/themeContext";
 
 const Bundle = ({ isForeground }) => {
-    const { authState } = useContext(Auth);
+
+    const { theme } = useContext(ThemeContext);
+    const { authState } = useContext(AuthContext);
     const [scrollY] = useState(new Animated.Value(0));
     const [ weapons, setWeapons ] = useState([]);
     const [ banner, setBanner ] = useState('');
@@ -21,6 +25,7 @@ const Bundle = ({ isForeground }) => {
         extrapolate: 'clamp',
     });
 
+    // gets the amount of seconds left until the bundle expires. this is needed for the timer component.
     const fetchDuration = async () => {
         if(authState.isSigned && isForeground){
             const durationInSeconds = await getBundleDurationInSeconds(
@@ -56,31 +61,37 @@ const Bundle = ({ isForeground }) => {
         }
     }
 
+    // init the bundle upon login
     useEffect(() => {
+
         fetchBundle();
         return () => {};
+
     }, [authState]);
 
+    // init the timer upon login/when the app is foregrounded and the user is logged in
     useEffect(() => {
+
         if(authState.isSigned){
             fetchDuration();
         }
+
         return () => {};
     }, [authState, isForeground]);
 
     const textComponent = () => {
         return(
-            <View style={styles.headerTextContainer}>
-                <Text style={styles.headerFeaturedText}>FEATURED | <Timer timerState={duration} setTimerState={setDuration}></Timer></Text>
-                <Text style={styles.headerText}>{title.toUpperCase()}{"\n"}COLLECTION</Text>
+            <View style={[styles.headerTextContainer]}>
+                <Text style={[styles.headerFeaturedText, { color: theme.app.title }]}>FEATURED | <Timer timerState={duration} setTimerState={setDuration}></Timer></Text>
+                <Text style={[styles.headerText, { color: theme.app.title }]}>{title.toUpperCase()}{"\n"}COLLECTION</Text>
             </View>
         );
     }
 
     return(
-        <View style={styles.container}>
+        <View style={[styles.container, {backgroundColor: theme.app.background}]}>
             <StoreHeader textComponent={textComponent()} headerHeight={headerHeight} banner={{ uri: banner }} imageStyle={styles.headerImg} />
-            <Weapons weapons={weapons} scrollY={scrollY} />
+            <Weapons weapons={weapons} scrollY={scrollY} color={theme.weapon.background} />
         </View>
     );
 }
@@ -91,7 +102,7 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        backgroundColor: "#121212",
+        backgroundColor: '#121212',
         flexWrap: "nowrap",
         flexDirection: "column",
     },

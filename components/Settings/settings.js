@@ -1,52 +1,59 @@
 import {StyleSheet, Text, View, ScrollView, Image, ImageBackground, Platform} from 'react-native';
-import {useState} from "react";
-import {
-    SettingsDividerShort,
-    SettingsDividerLong,
-    SettingsEditText,
-    SettingsCategoryHeader,
-    SettingsSwitch,
-    SettingsPicker,
-    SettingsTextLabel, SettingsButton
-} from "react-native-settings-components";
-
+import {useContext, useEffect, useState} from "react";
+import {SettingsDividerShort, SettingsSwitch,} from "react-native-settings-components";
+import { SettingsContext } from '../Contexts/settingsContext';
+import {ThemeContext} from "../Contexts/themeContext";
 
 const AppSettings = () => {
-    const [state, setState] = useState({
-        username: " ",
-        allowPushNotifications: false,
-        gender: " "
-    });
 
-    const { allowPushNotifications } = state;
+    const { theme, setDark, setLight, isLight } = useContext(ThemeContext);
+    const { settingsState, setSettingsState} = useContext(SettingsContext);
+    const { allowPushNotifications } = settingsState;
+
+    const onChangeLightMode = () => {
+        if(!isLight){
+            setLight();
+        } else {
+            setDark();
+        }
+    }
+
+    const onChangeNotifications = () => {
+        setSettingsState({
+            ...settingsState,
+            allowPushNotifications: !allowPushNotifications,
+        });
+    }
 
     return(
-        <View style={styles.container}>
+        <View style={[styles.container, {backgroundColor: theme.app.background}]}>
 
             <View style={styles.header}>
-                <Text style={styles.headerTitle}>Settings</Text>
+                <Text style={[styles.headerTitle, {color: theme.app.text}]}>Settings</Text>
             </View>
 
             <ScrollView contentContainerStyle={styles.scrollviewContainer}>
 
                 <SettingsSwitch
-                    containerStyle={account.name}
-                    titleStyle={styles.settingText}
+                    containerStyle={[account.name, {backgroundColor: theme.settings.box}]}
+                    titleStyle={[styles.settingText, { color: theme.app.text}]}
                     title={"Light Mode"}
-                    value={false}>
+                    value={isLight}
+                    onValueChange={onChangeLightMode}>
                 </SettingsSwitch>
 
                 <SettingsDividerShort
-                    dividerStyle={dividerShort.line}
-                    containerStyle={dividerShort.container}
+                    dividerStyle={[dividerShort.line, {backgroundColor: theme.settings.divider1}]}
+                    containerStyle={[dividerShort.container, {backgroundColor: theme.settings.divider2}]}
                     ios={true}>
                 </SettingsDividerShort>
 
                 <SettingsSwitch
-                    containerStyle={account.remember}
-                    titleStyle={styles.settingText}
+                    containerStyle={[account.remember, {backgroundColor: theme.settings.box}]}
+                    titleStyle={[styles.settingText, { color: theme.app.text}]}
                     title={"Show Notifications"}
-                    value={true}>
+                    value={allowPushNotifications}
+                    onValueChange={onChangeNotifications}>
                 </SettingsSwitch>
 
             </ScrollView>

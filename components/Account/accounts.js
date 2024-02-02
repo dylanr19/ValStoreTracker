@@ -9,16 +9,19 @@ import {
 import React, {useEffect, useState, useContext} from "react";
 import {Ionicons} from "@expo/vector-icons";
 import Swipeable from 'react-native-swipeable';
-import {getPlayerCard, getPlayerLoadout, getWallet} from "../api/StoreService";
-import {Auth} from "./auth";
-import {fetchPlayerInfo} from "../api/AuthService";
-import {fetchNameService} from "../api/NameService";
+import {getPlayerCard, getPlayerLoadout, getWallet} from "../../api/StoreService";
+import {AuthContext} from "../Contexts/authContext";
+import {fetchPlayerInfo} from "../../api/AuthService";
+import {fetchNameService} from "../../api/NameService";
+import {SettingsContext} from "../Contexts/settingsContext";
+import {ThemeContext} from "../Contexts/themeContext";
 
 const Accounts = () => {
 
+    const { theme } = useContext(ThemeContext);
     const [playerCard, setPlayerCard] = useState('');
     const [playerName, setPlayerName] = useState({ name: '', tag: '' });
-    const { logout, authState } = useContext(Auth);
+    const { logout, authState } = useContext(AuthContext);
 
     const [ wallet, setWallet ] = useState({
         valorantPoints: '',
@@ -90,7 +93,7 @@ const Accounts = () => {
 
             <Text
                 style={{
-                    color: "gray",
+                    color: theme.account.logout,
                     fontWeight: "bold",
                     marginTop: 25,
                     marginLeft: "2.5%",
@@ -100,21 +103,22 @@ const Accounts = () => {
     ];
 
     return(
-        <View style={styles.page}>
-            <View style={styles.container}>
+        <View style={[styles.page, { backgroundColor: theme.app.background}]}>
+            <View style={[styles.container, {backgroundColor: theme.app.background}]}>
 
                 <View style={header.container}>
-                    <Text style={header.title}>Account</Text>
+                    <Text style={[header.title, {color: theme.app.text}]}>Account</Text>
                 </View>
 
-                <View style={styles.thinLine}></View>
+                <View style={[styles.thinLine, {backgroundColor: theme.account.thinLine}]}></View>
 
                 <View style={accounts.container}>
                     <View>
 
                         <Swipeable
-                            contentContainerStyle={[accounts.accountContainer, {backgroundColor: "#363636"}]}
-                            rightButtons={logoutButton}>
+                            contentContainerStyle={[accounts.accountContainer, {backgroundColor: theme.account.swiper}]}
+                            rightButtons={logoutButton}
+                        >
 
                             <View style={[accounts.imageContainer, {}]}>
                                 <ImageBackground
@@ -126,13 +130,13 @@ const Accounts = () => {
                             </View>
 
                             <View style={accounts.textContainer}>
-                                <Text style={[accounts.text, {color: "tomato"}]}>{playerName.name}</Text>
-                                <Text style={[accounts.tag, {color: "gray"}]}>#{playerName.tag}</Text>
+                                <Text style={[accounts.text, {color: theme.account.name}]}>{playerName.name}</Text>
+                                <Text style={[accounts.tag, {color: theme.account.tag}]}>#{playerName.tag}</Text>
                             </View>
 
                             <Ionicons
                                 name="ios-arrow-forward"
-                                size={22} color="gray"
+                                size={22} color={theme.account.arrow}
                                 style={{ display: "undefined" }}
                             />
 
@@ -145,25 +149,25 @@ const Accounts = () => {
                         <ImageBackground
                             source={{ uri: 'https://media.valorant-api.com/currencies/85ad13f7-3d1b-5128-9eb2-7cd8ee0b5741/displayicon.png' }}
                             style={{ flex: 1 }}
-                            imageStyle={points.image}
+                            imageStyle={[points.image, { backgroundColor: theme.currency.icon }]}
                             resizeMode={"cover"}
                         >
-                            <Text style={points.text}>{wallet.valorantPoints} VP</Text>
+                            <Text style={[points.text, {color: theme.app.text}]}>{wallet.valorantPoints} VP</Text>
                         </ImageBackground>
 
                         <ImageBackground
                             source={{ uri: 'https://media.valorant-api.com/currencies/e59aa87c-4cbf-517a-5983-6e81511be9b7/displayicon.png' }}
                             style={{ flex: 1 }}
-                            imageStyle={points.image}
+                            imageStyle={[points.image, { backgroundColor: theme.currency.icon }]}
                             resizeMode={"cover"}
                         >
-                            <Text style={points.text}>{wallet.radianite} R</Text>
+                            <Text style={[points.text, {color: theme.app.text}]}>{wallet.radianite} R</Text>
                         </ImageBackground>
 
                     </View>
                 </View>
 
-                <View style={styles.thinLine}></View>
+                <View style={[styles.thinLine, {backgroundColor: theme.account.thinLine}]}></View>
 
             </View>
         </View>
@@ -245,9 +249,12 @@ const points = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        // justifyContent: 'center',
+        // alignItems: 'center',
+        // alignContent: 'center',
         maxHeight: 100,
         marginBottom: 20,
+        // backgroundColor: 'red'
     },
     text: {
         fontFamily: "Oswald_400Regular",
@@ -259,7 +266,11 @@ const points = StyleSheet.create({
     image: {
         resizeMode:'contain',
         flex: 1,
-        maxHeight: '80%'
+        maxHeight: '80%',
+        maxWidth: '60%',
+        borderRadius: 60,
+        marginLeft: '32%',
+        backgroundColor: 'tomato',
     }
 });
 

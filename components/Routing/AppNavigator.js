@@ -1,17 +1,21 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Ionicons} from "@expo/vector-icons";
-import Shop from "./shop";
-import Accounts from "./accounts";
-import Search from "./search";
-import AppSettings from "./settings";
+import Shop from "../Store/shop";
+import Accounts from "../Account/accounts";
+import Search from "../Account/search";
+import AppSettings from "../Settings/settings";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {NavigationContainer} from "@react-navigation/native";
-import Login from "./login";
-import {Auth} from "./auth";
+import Login from "../Login/login";
+import {AuthContext} from "../Contexts/authContext";
+import {SettingsContext} from "../Contexts/settingsContext";
+import {ThemeContext} from "../Contexts/themeContext";
 
 const Tab = createBottomTabNavigator();
 
 function TabNavigator(){
+
+    const { theme } = useContext(ThemeContext);
 
     return(
         <Tab.Navigator
@@ -34,9 +38,9 @@ function TabNavigator(){
 
                     return <Ionicons name={iconName} size={size} color={color} />;
                 },
-                tabBarActiveTintColor: 'tomato',
-                tabBarInactiveTintColor: 'gray',
-                tabBarStyle: { backgroundColor: "#363636", borderTopWidth: 0, },
+                tabBarActiveTintColor: theme.tabBar.activeIcon,
+                tabBarInactiveTintColor: theme.tabBar.icon,
+                tabBarStyle: { backgroundColor: theme.tabBar.background, borderTopWidth: 0, },
                 headerStyle: { height: 0, },
             })}
         >
@@ -50,7 +54,7 @@ function TabNavigator(){
 }
 
 const AppNavigator = () => {
-    const { authState } = useContext(Auth);
+    const { authState } = useContext(AuthContext);
 
     return(
         <NavigationContainer>

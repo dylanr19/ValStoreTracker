@@ -2,12 +2,12 @@ import React, {useContext, useEffect, useState, useRef} from "react";
 import {SafeAreaView, View} from "react-native";
 import { WebView } from 'react-native-webview';
 import 'react-native-url-polyfill/auto';
-import {Auth} from "./auth";
+import {AuthContext} from "../Contexts/authContext";
 import RegionPicker from "./regionPicker";
 import IonButton from "./ionButton";
 
 const Login = () => {
-    const { login } = useContext(Auth);
+    const { login } = useContext(AuthContext);
     const webViewRef = useRef(null);
     const [showWebview, setShowWebview] = useState(false);
     const [region, setRegion] = useState('');
@@ -17,10 +17,14 @@ const Login = () => {
         return params.get(tokenName);
     }
 
+    // After a successful login the url will hold the tokens needed for making calls to Riot end points.
+    // Extract the tokens from the url and save them within the app.
     const handleNavigationStateChange = (navState) => {
-        const accessToken = getToken(navState.url, "access_token");
-        const idToken = getToken(navState.url, "id_token");
-        login(accessToken, idToken, region);
+        if(navState.url !== null) {
+            const accessToken = getToken(navState.url, "access_token");
+            const idToken = getToken(navState.url, "id_token");
+            login(accessToken, idToken, region);
+        }
     };
 
     const handleForwardNavigation = () => {

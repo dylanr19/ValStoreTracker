@@ -6,7 +6,9 @@ const Timer = ({ timerState, setTimerState }) => {
     const [timeFormat, setTimeFormat] = useState('00:00:00:00'); // saves the state in time format
 
     const updateTimer = () => {
-        setTimerState(timerState - 1);
+        if(timerState !== 0){
+            setTimerState(timerState - 1);
+        }
     }
 
     const convertSecondsToTime = () => {
@@ -33,7 +35,7 @@ const Timer = ({ timerState, setTimerState }) => {
 
         }, 1000);
 
-        // avoid multiple interval instances or memory leaks
+        // avoid memory leaks
         return () => clearInterval(interval);
     }, [timerState]);
 

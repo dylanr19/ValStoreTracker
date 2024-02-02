@@ -1,31 +1,35 @@
 import {StyleSheet, View, ScrollView, FlatList, Animated,} from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import {Feather,} from "@expo/vector-icons";
-import Weapon from "./weapon";
+import Weapon from "../Weapon/weapon";
 import {useContext, useEffect, useState} from "react";
-import { Auth } from "./auth";
-import {getPlayerLoadout, getSkinByUuid} from "../api/StoreService";
-import Weapons from "./weapons";
+import { AuthContext } from "../Contexts/authContext";
+import {getPlayerLoadout, getSkinByUuid} from "../../api/StoreService";
+import Weapons from "../Weapon/weapons";
+import {SettingsContext} from "../Contexts/settingsContext";
+import {ThemeContext} from "../Contexts/themeContext";
 
 const Search = () => {
 
+    const { theme } = useContext(ThemeContext);
+    const { authState } = useContext(AuthContext);
     const [ initialLoadout, setInitialLoadout] = useState([]);
     const [ currentLoadout, setCurrentLoadout ] = useState([]);
     const [ searchState, setSearchState] = useState('');
-    const { authState } = useContext(Auth);
 
     // Store and display the user's search input in the search bar
     const updateSearch = (search) => {
         setSearchState(search);
     }
 
-    // (partly) match the user's search input with the displayName of certain weapons in the loadout
+    // (partly) match the user's search input with the displayName of certain weapons in the loadout,
     // and then displays these weapons
     const handleSearch = () => {
 
         if (searchState === '')
         {
             setCurrentLoadout(initialLoadout);
+
         } else {
             const matchedSkins = [];
 
@@ -52,7 +56,8 @@ const Search = () => {
 
             guns.push({
                 displayName: skin.data.displayName,
-                displayIcon: skin.data.chromas[0].fullRender
+                displayIcon: skin.data.chromas[0].fullRender,
+                showVP: false
             });
         }
 
@@ -62,35 +67,39 @@ const Search = () => {
 
     // init the flatlist upon login
     useEffect(() => {
+
         if (authState.isSigned){
             initFlatList();
         }
         return () => {};
+
     }, [authState]);
 
     // invokes handlesearch to match user search input with certain weapon names
     // when search state changes / user typed in the search bar.
     useEffect(() => {
+
         handleSearch();
         return () => {};
+
     }, [searchState])
 
     return(
-        <View style={styles.container}>
+        <View style={[styles.container, {backgroundColor: theme.app.background}]}>
 
             <View style={styles.header}>
 
-                <SearchBar containerStyle={info.header}
-                           inputContainerStyle={info.inputContainer}
-                           inputStyle={ { color: 'white' } }
-                           placeholderTextColor="white" searchIcon={info.inputContainer}
+                <SearchBar containerStyle={[info.header, {backgroundColor: theme.app.background}]}
+                           inputContainerStyle={[info.inputContainer, {backgroundColor: theme.search.background}]}
+                           inputStyle={ { color: theme.app.text } }
+                           placeholderTextColor={theme.app.text}
                            platform="ios" placeholder= "Search" onChangeText={updateSearch}
                            value={searchState}
                 ></SearchBar>
 
             </View>
 
-            <Weapons weapons={currentLoadout} />
+            <Weapons weapons={currentLoadout} color={theme.weapon.background} />
 
         </View>
     );

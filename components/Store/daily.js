@@ -1,14 +1,17 @@
 import {StyleSheet, Text, View, Animated} from 'react-native';
 import {useContext, useEffect, useState} from "react";
-import {getSingleSkinsDurationInSeconds, getFeaturedSkinOffers, getStorePrice} from "../api/StoreService";
-import {Auth} from "./auth";
+import {getSingleSkinsDurationInSeconds, getFeaturedSkinOffers, getStorePrice} from "../../api/StoreService";
+import {AuthContext} from "../Contexts/authContext";
 import Timer from "./timer";
-import Weapons from "./weapons";
+import Weapons from "../Weapon/weapons";
 import StoreHeader from "./storeHeader";
+import {SettingsContext} from "../Contexts/settingsContext";
+import {ThemeContext} from "../Contexts/themeContext";
 
 const Daily = ({ isForeground }) => {
 
-    const { authState } = useContext(Auth);
+    const { theme } = useContext(ThemeContext);
+    const { authState } = useContext(AuthContext);
     const [scrollY] = useState(new Animated.Value(0));
     const [ weaponComponents, setWeaponComponents ] = useState([]);
     const [duration, setDuration] = useState(0); // the remaining time in seconds until the storefront expires
@@ -71,16 +74,16 @@ const Daily = ({ isForeground }) => {
     const textComponent = () => {
         return(
             <View style={styles.headerTextContainer}>
-                <Text style={styles.headerText}>DAILY STORE</Text>
+                <Text style={[styles.headerText, { color: theme.app.title }]}>DAILY STORE</Text>
                 <Text style={styles.headerTimeText}><Timer timerState={duration} setTimerState={setDuration}></Timer></Text>
             </View>
         );
     }
 
     return(
-        <View style={styles.container}>
+        <View style={[styles.container, {backgroundColor: theme.app.background}]}>
             <StoreHeader headerHeight={headerHeight} textComponent={textComponent()} imageStyle={styles.headerImg} banner={banner}/>
-            <Weapons weapons={weaponComponents} scrollY={scrollY} />
+            <Weapons weapons={weaponComponents} scrollY={scrollY} color={theme.weapon.background} />
         </View>
     );
 }

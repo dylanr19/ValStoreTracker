@@ -1,10 +1,13 @@
 import {Image, Pressable, StyleSheet, Text, View} from "react-native";
-import {useState} from "react";
+import {useContext, useState} from "react";
 import SkinInfo from "./skin-info-modal";
+import {ThemeContext} from "../Contexts/themeContext";
 
 const VPEmblem = "https://media.valorant-api.com/currencies/85ad13f7-3d1b-5128-9eb2-7cd8ee0b5741/displayicon.png";
 
 const Weapon = ({ image, price, name, color, showVP = true }) => {
+
+    const { theme } = useContext(ThemeContext);
     const [isModalVisible, setModalVisible] = useState(false);
 
     const onModalOpen = () => {
@@ -26,8 +29,8 @@ const Weapon = ({ image, price, name, color, showVP = true }) => {
             <Image style={styles.image} source={image}/>
 
             <View style={info.container }>
-                { showVP === true ? <Image style={info.image} source={{ uri: VPEmblem }}/> : null }
-                <Text style={info.text}>{price}<Text> {name}</Text></Text>
+                { showVP === true ? <Image style={[info.image, { backgroundColor: theme.currency.icon }]} source={{ uri: VPEmblem }}/> : null }
+                <Text style={[info.text, { color: theme.app.text }]}>{price}<Text> {name}</Text></Text>
             </View>
 
             <SkinInfo onModalClose={onModalClose} isModalVisible={isModalVisible} skinName={name} ></SkinInfo>
@@ -60,7 +63,9 @@ const info = StyleSheet.create({
     },
     image: {
         resizeMode:'contain',
-        width: '4.5%'
+        width: '4.5%',
+        backgroundColor: 'tomato',
+        borderRadius: 10,
     },
     text: {
         left: "25%",

@@ -2,10 +2,10 @@ import Swiper from 'react-native-swiper';
 import {AppState, Text} from "react-native";
 import Bundle from "./Bundle";
 import Daily from "./daily";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
+import {ThemeContext} from "../Contexts/themeContext";
 
 const Shop = () => {
-
     const [isForeground, setIsForeground] = useState(true);
 
     // Starts the app state listener to notify child components when app is foregrounded
@@ -21,7 +21,7 @@ const Shop = () => {
        // start the app state listener
        const subscription = AppState.addEventListener('change', handleAppStateChange);
 
-       // prevent memory leaks if component unmounts
+       // prevent memory leaks when component unmounts
        return () => {
            subscription.remove();
        }
