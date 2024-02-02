@@ -8,7 +8,6 @@ const RegionPicker = ({ region, setRegion }) => {
 
     const onRegionChange = (region) => {
         setRegion(region.value);
-        console.log(region.value);
     }
 
     const regions = [
