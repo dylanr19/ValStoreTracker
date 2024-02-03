@@ -33,6 +33,7 @@ Tools that I used for this project:
 - React-Native
 - Expo Go
 - Jetbrains Webstorm
+- https://valapidocs.techchrism.me/
 
 # Run the project
 ### Install Node.js LTS
