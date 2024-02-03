@@ -52,24 +52,22 @@ export const fetchStoreFrontV2 = async (auth) =>
 
 export const getBundleSkins = async (auth) => {
 
-    const skins = await fetchSkins();
-    const storeFront = await fetchStoreFrontV2(auth);
+    const [skins, storeFront] = await Promise.all([
+        fetchSkins(),
+        fetchStoreFrontV2(auth)
+    ]);
+
     const bundleItems = storeFront.FeaturedBundle.Bundle.Items;
 
-    const bundleSkins = [];
-
-    bundleItems.forEach(item => {
-        const skin = skins.data.find(skin => {
-            return skin.levels.some(level => level.uuid === item.Item.ItemID);
+    const bundleSkins = bundleItems.map(bundleItem => {
+        return skins.data.find(skin => {
+            return skin.levels.some(level => level.uuid === bundleItem.Item.ItemID);
         });
-
-        if (skin !== undefined){
-            bundleSkins.push(skin);
-        }
     });
 
     return bundleSkins;
 }
+
 
 export const getBundleDurationInSeconds = async (auth) => {
 
