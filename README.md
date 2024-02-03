@@ -35,7 +35,7 @@ Tools that I have used to make this project:
 - Jetbrains Webstorm
 
 # Run the project
-### Install Node.js ( LTS Release )
+### Install Node.js LTS
 
 https://nodejs.org/en/
 
