@@ -31,9 +31,9 @@ Tools that I used for this project:
 - Javascript
 - CSS
 - React-Native
-- Expo Go
-- Jetbrains Webstorm
-- Insomnia.rest
+- Expo
+- Webstorm
+- Insomnia
 - https://valapidocs.techchrism.me/
 - https://valorant-api.com/
 
