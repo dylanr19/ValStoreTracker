@@ -33,6 +33,7 @@ Tools that I used for this project:
 - React-Native
 - Expo Go
 - Jetbrains Webstorm
+- Insomnia.rest
 - https://valapidocs.techchrism.me/
 - https://valorant-api.com/
 
