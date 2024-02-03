@@ -35,6 +35,10 @@ Tools that I have used to make this project:
 - Jetbrains Webstorm
 
 # Run the project
+### Install Node.js
+
+https://nodejs.org/en/
+
 ### Install the dependencies
 
 ```
