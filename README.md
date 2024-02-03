@@ -39,7 +39,7 @@ Tools that I have used to make this project:
 
 https://nodejs.org/en/
 
-### Install the dependencies
+### Install the dependencies ( optional )
 
 ```
 $ npm install
