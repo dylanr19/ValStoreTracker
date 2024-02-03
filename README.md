@@ -26,7 +26,7 @@ I won't be uploading the app to the App Store for the following reasons:
 
 # Tools
 
-Tools that I have used to make this project:
+Tools that I used for this project:
 
 - Javascript
 - CSS
