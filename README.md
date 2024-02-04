@@ -13,13 +13,14 @@ The Valorant skin store is an in-game marketplace where players can purchase cos
 I won't be uploading the app to the App Store for the following reasons:
 - I have developed this app primarily for personal use
 - I created this app to learn about app/web development
-- There are other store trackers out there ( if not taken down by Riot Games)
+- There are already other store trackers out there ( if not taken down by Riot Games)
 - It violates Riot's Policy
 
 # Features
 - Login/Logout
 - View current skin bundle
 - View featured skins
+- View skin videos
 - View wallet
 - View owned skins
 - Dark/Light Theme switch
