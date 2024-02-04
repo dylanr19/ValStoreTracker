@@ -1,5 +1,5 @@
 import {Image, Pressable, StyleSheet, Text, View} from "react-native";
-import {useContext, useState} from "react";
+import {useContext, useMemo, useState} from "react";
 import SkinInfo from "./skin-info-modal";
 import {ThemeContext} from "../Contexts/themeContext";
 
@@ -23,6 +23,13 @@ const Weapon = ({ image, price, name, color, showVP = true }) => {
         backgroundColor: color,
     }
 
+    // Avoid that the timer will rerender SkinInfo every second which causes performance issues within the SkinInfo's swiper components.
+    const memoizedSkinInfo = useMemo(() => {
+        return(
+            <SkinInfo onModalClose={onModalClose} isModalVisible={isModalVisible} skinName={name} ></SkinInfo>
+        );
+    }, [isModalVisible]);
+
     return(
         <Pressable style={containerStyle} onPress={onModalOpen}>
 
@@ -33,7 +40,7 @@ const Weapon = ({ image, price, name, color, showVP = true }) => {
                 <Text style={[info.text, { color: theme.app.text }]}>{price}<Text> {name}</Text></Text>
             </View>
 
-            <SkinInfo onModalClose={onModalClose} isModalVisible={isModalVisible} skinName={name} ></SkinInfo>
+            {memoizedSkinInfo}
         </Pressable>
     );
 }
