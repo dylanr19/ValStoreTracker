@@ -65,19 +65,8 @@ export const authenticate = async (accessToken, idToken) => {
     let jsonData = await fetchEntitlement(accessToken);
     jsonData = JSON.parse(JSON.stringify(jsonData));
     const entitlementsToken = jsonData.entitlements_token;
-
-    //jsonData = await fetchRegion(accessToken, idToken);
-
-    //console.log(jsonData);
-
-    //const region = jsonData.affinities.live;
-
     jsonData = await fetchPlayerInfo(accessToken);
     const puuid = jsonData.sub;
-
-    //const names = await fetchNameService('eu', entitlementsToken, accessToken, puuid);
-    // console.log('name');
-    // console.log(names);
 
     return {
         accessToken: accessToken,
