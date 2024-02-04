@@ -6,6 +6,7 @@ import { fetchSkinByName } from '../../api/StoreService';
 import Swiper from "react-native-swiper";
 import {SettingsContext} from "../Contexts/settingsContext";
 import {ThemeContext} from "../Contexts/themeContext";
+import SwiperWindow from "./swiperWindow";
 
 const SkinInfo = ({ isModalVisible, onModalClose, skinName }) => {
 
@@ -13,12 +14,6 @@ const SkinInfo = ({ isModalVisible, onModalClose, skinName }) => {
     const [chromaVideos, setChromaVideos] = useState([]);
     const [levelVideos, setLevelVideos] = useState([]);
     const [images, setImages] = useState([]);
-
-     const placeholder =
-         <View key={skinName} style={styles.video}>
-            <Text style={{ flex: 0.1, marginTop: '5%', color: theme.app.text, textAlign: 'center' }}>Video not available</Text>
-            <Image style={ { flex: 1 } } source={{ uri: 'https://www.aputf.org/wp-content/uploads/2015/06/default-placeholder1-1024x1024-960x540.png' }}></Image>
-         </View>
 
     const initSkinInfo = async () => {
 
@@ -100,41 +95,9 @@ const SkinInfo = ({ isModalVisible, onModalClose, skinName }) => {
                     <Ionicons name="ios-close-outline" size={24} color={theme.weapon.close} />
                 </Pressable>
 
-                    <Swiper containerStyle={ { flex: 1 } }
-                            dotColor={theme.swiper.dot}
-                            activeDotColor={theme.swiper.activeDot}
-                            showsButtons={true}
-                            prevButton={<Text style={{ color: theme.swiper.arrow, fontSize: 30, right: "70%" }}>‹</Text>}
-                            nextButton={<Text style={{ color: theme.swiper.arrow, fontSize: 30, left: "70%" }}>›</Text>}
-                    >
-                        { levelVideos.length !== 0 ? levelVideos.map(video => (
-                            video
-                        )) : placeholder}
-                    </Swiper>
-
-                <Swiper containerStyle={ { flex: 1 } }
-                        dotColor={theme.swiper.dot}
-                        activeDotColor={theme.swiper.activeDot}
-                        showsButtons={true}
-                        prevButton={<Text style={{ color: theme.swiper.arrow, fontSize: 30, right: "70%" }}>‹</Text>}
-                        nextButton={<Text style={{ color: theme.swiper.arrow, fontSize: 30, left: "70%" }}>›</Text>}
-                >
-                    { chromaVideos.length !== 0 ? chromaVideos.map(video => (
-                        video
-                    )) : placeholder}
-                </Swiper>
-
-                <Swiper containerStyle={{ flex: 1, marginTop: '5%' }}
-                        dotColor={theme.swiper.dot}
-                        activeDotColor={theme.swiper.activeDot}
-                        showsButtons={true}
-                        prevButton={<Text style={{ color: theme.swiper.arrow, fontSize: 30, right: "70%" }}>‹</Text>}
-                        nextButton={<Text style={{ color: theme.swiper.arrow, fontSize: 30, left: "70%" }}>›</Text>}
-                >
-                    {images.map(image => (
-                        image
-                    ))}
-                </Swiper>
+                <SwiperWindow containerStyle={{ flex: 1 }} theme={theme} contentArray={levelVideos} />
+                <SwiperWindow containerStyle={{ flex: 1 }} theme={theme} contentArray={chromaVideos} />
+                <SwiperWindow containerStyle={{ flex: 1, marginTop: '5%' }} contentArray={images} theme={theme}/>
 
             </View>
         </Modal>
