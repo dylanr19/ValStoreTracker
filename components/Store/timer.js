@@ -6,10 +6,12 @@ const Timer = ({ timerState, setTimerState }) => {
     const [timeFormat, setTimeFormat] = useState('00:00:00:00'); // saves the state in time format
 
     const updateTimer = () => {
-        if(timerState !== 0){
-            setTimerState(timerState - 1);
-        }
-    }
+        setTimerState(prevTimerState => {
+            if (prevTimerState !== 0) {
+                return prevTimerState - 1;
+            }
+        });
+    };
 
     const convertSecondsToTime = () => {
 
@@ -29,14 +31,15 @@ const Timer = ({ timerState, setTimerState }) => {
 
         // update the timer state per 1000ms
         const interval = setInterval(() => {
-
             updateTimer();
-            convertSecondsToTime();
-
         }, 1000);
 
         // avoid memory leaks
         return () => clearInterval(interval);
+    }, []);
+
+    useEffect(() => {
+        convertSecondsToTime();
     }, [timerState]);
 
     return(
