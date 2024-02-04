@@ -88,11 +88,9 @@ const SkinInfo = ({ isModalVisible, onModalClose, skinName }) => {
     }
 
     useEffect(() => {
-
         initSkinInfo();
-
         return () => {};
-    }, [])
+    }, []);
 
     return(
         <Modal style={styles.modal} animationType="slide" transparent={true} visible={isModalVisible}>
