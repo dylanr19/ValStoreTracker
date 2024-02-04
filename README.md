@@ -68,5 +68,6 @@ scan the QR code.
 ![Featured Skins with Dark Theme](assets/screenshots/featuredDark.jpeg)
 ![Account View with Dark Theme](assets/screenshots/accountDark.jpeg)
 ![Owned skins View with Dark Theme](assets/screenshots/loadoutDark.jpeg)
+![Skin Preview with Dark Theme](assets/screenshots/previewDark.jpeg)
 
 
