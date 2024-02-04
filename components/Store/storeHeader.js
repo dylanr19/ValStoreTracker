@@ -1,9 +1,6 @@
-import {Animated, FlatList, ImageBackground, Text, View} from "react-native";
+import {Animated, ImageBackground} from "react-native";
 import MaskedView from "@react-native-masked-view/masked-view";
 import {LinearGradient} from "expo-linear-gradient";
-import Timer from "./timer";
-import {useContext} from "react";
-import {ThemeContext} from "../Contexts/themeContext";
 
 const StoreHeader = ({ textComponent, headerHeight, imageStyle, banner  }) => {
 
