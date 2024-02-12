@@ -20,7 +20,7 @@ const Bundle = ({ isForeground }) => {
     const [duration, setDuration] = useState(0); // the remaining time in seconds until the bundle expires
 
     const headerHeight = scrollY.interpolate({
-        inputRange: [0, 200], // Adjust the range as needed
+        inputRange: [0, 300], // Adjust the range as needed
         outputRange: ["30%", "0%"], // Initial and final height of the header
         extrapolate: 'clamp',
     });
@@ -43,17 +43,21 @@ const Bundle = ({ isForeground }) => {
             const weaponsArray = [];
 
             for (const skin of fetchedSkins) {
-                const price = await getStorePrice(authState, skin.levels[0].uuid,);
 
-                weaponsArray.push({
+
+                    const price = await getStorePrice(authState, skin.levels[0].uuid,);
+
+                    weaponsArray.push({
                         displayName: skin.displayName,
-                        displayIcon: skin.displayIcon,
+                        displayIcon: { uri: skin.displayIcon },
                         price: price,
-                        color: "#212121",
+                        color: theme.weapon.background,
                         key: skin.uuid,
-                        showVP: true
-                });
+                    });
+
             }
+
+
 
             setBanner(await getBundleImage(authState));
             setTitle(await getBundleTitle(authState));
@@ -91,7 +95,7 @@ const Bundle = ({ isForeground }) => {
     return(
         <View style={[styles.container, {backgroundColor: theme.app.background}]}>
             <StoreHeader textComponent={textComponent()} headerHeight={headerHeight} banner={{ uri: banner }} imageStyle={styles.headerImg} />
-            <Weapons weapons={weapons} scrollY={scrollY} color={theme.weapon.background} />
+            <Weapons weapons={weapons} scrollY={scrollY} />
         </View>
     );
 }
