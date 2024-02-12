@@ -96,7 +96,7 @@ const Bundle = ({ isForeground }) => {
     return(
         <View style={[styles.container, {backgroundColor: theme.app.background}]}>
             <StoreHeader textComponent={textComponent()} headerHeight={headerHeight} banner={{ uri: banner }} imageStyle={styles.headerImg} />
-            <Weapons weapons={weapons} scrollY={scrollY} />
+            <Weapons weapons={weapons} color={theme.weapon.background} scrollY={scrollY} />
         </View>
     );
 }
