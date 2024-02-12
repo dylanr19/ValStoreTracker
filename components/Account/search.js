@@ -56,7 +56,9 @@ const Search = () => {
 
             guns.push({
                 displayName: skin.data.displayName,
-                displayIcon: skin.data.chromas[0].fullRender,
+                displayIcon: { uri: skin.data.chromas[0].fullRender },
+                color: theme.weapon.background,
+                showImage: true,
                 showVP: false
             });
         }

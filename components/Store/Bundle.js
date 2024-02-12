@@ -52,6 +52,7 @@ const Bundle = ({ isForeground }) => {
                         displayIcon: { uri: skin.displayIcon },
                         price: price,
                         color: theme.weapon.background,
+                        showImage: true,
                         key: skin.uuid,
                     });
 
