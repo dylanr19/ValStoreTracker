@@ -65,7 +65,8 @@ export const getBundleSkins = async (auth) => {
         });
     });
 
-    return bundleSkins;
+    //Make sure that the array does not contain null values
+    return bundleSkins.filter(b => b);
 }
 
 
