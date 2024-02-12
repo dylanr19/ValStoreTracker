@@ -85,7 +85,7 @@ const Daily = ({ isForeground }) => {
     return(
         <View style={[styles.container, {backgroundColor: theme.app.background}]}>
             <StoreHeader headerHeight={headerHeight} textComponent={textComponent()} imageStyle={styles.headerImg} banner={banner}/>
-            <Weapons weapons={weaponComponents} scrollY={scrollY} />
+            <Weapons weapons={weaponComponents} color={theme.weapon.background} scrollY={scrollY} />
         </View>
     );
 }
