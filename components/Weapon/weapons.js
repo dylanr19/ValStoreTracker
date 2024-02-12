@@ -1,14 +1,14 @@
 import {Animated, FlatList, ScrollView, StyleSheet, View} from "react-native";
 import Weapon from "./weapon";
 
-const Weapons = ({ weapons, scrollY = null }) => {
+const Weapons = ({ weapons, color, scrollY = null }) => {
 
     const renderItem = ({ item }) => (
         <Weapon
             key={item.uuid}
             name={item.displayName}
             price={item.price}
-            color={item.color}
+            color={color}
             image={item.displayIcon}
             showImage={item.showImage}
             showVP={item.showVP}
