@@ -18,8 +18,8 @@ const Daily = ({ isForeground }) => {
     const banner = require('C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\images\\valo-menu-background.jpeg');
 
     const headerHeight = scrollY.interpolate({
-       inputRange: [0, 100],
-       outputRange: ["30%", "3%"],
+       inputRange: [0, 300],
+       outputRange: ["30%", "0%"],
        extrapolate: 'clamp'
     });
 
@@ -47,13 +47,14 @@ const Daily = ({ isForeground }) => {
 
                 weaponComponents.push({
                     displayName: skin.displayName,
-                    displayIcon: skin.displayIcon,
+                    displayIcon: { uri: skin.displayIcon },
                     price: price,
-                    color: "#212121",
+                    color: theme.weapon.background,
                     key: skin.uuid,
-                    showVP: true
                 });
             }
+
+
 
             setWeaponComponents(weaponComponents);
         }
@@ -83,7 +84,7 @@ const Daily = ({ isForeground }) => {
     return(
         <View style={[styles.container, {backgroundColor: theme.app.background}]}>
             <StoreHeader headerHeight={headerHeight} textComponent={textComponent()} imageStyle={styles.headerImg} banner={banner}/>
-            <Weapons weapons={weaponComponents} scrollY={scrollY} color={theme.weapon.background} />
+            <Weapons weapons={weaponComponents} scrollY={scrollY} />
         </View>
     );
 }
