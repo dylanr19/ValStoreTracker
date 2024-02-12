@@ -4,6 +4,15 @@ import AuthProvider from "./components/Contexts/authContext";
 import SettingsProvider from "./components/Contexts/settingsContext";
 import ThemeProvider from "./components/Contexts/themeContext";
 import AppNavigator from "./components/Routing/AppNavigator";
+import { LogBox } from 'react-native';
+
+// Ignore specific warnings
+LogBox.ignoreAllLogs(true);
+
+// Ignore all warnings
+console.disableYellowBox = true;
+
+
 
 export default function App() {
     let [fontsLoaded, fontError] = useFonts({
