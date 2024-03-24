@@ -8,14 +8,6 @@ Valorant is a tactical first-person shooter developed by Riot Games, featuring t
 ##### What is the Valorant Store?
 The Valorant skin store is an in-game marketplace where players can purchase cosmetic items such as weapon skins and other customization options. Each player has a unique shop that rotates daily.
 
-# App Store
-
-I won't be uploading the app to the App Store for the following reasons:
-- I have developed this app primarily for personal use
-- I created this app to learn about app/web development
-- There are already other store trackers out there ( if not taken down by Riot Games)
-- It violates Riot's Policy
-
 # Features
 - Login/Logout
 - View current skin bundle
@@ -24,19 +16,6 @@ I won't be uploading the app to the App Store for the following reasons:
 - View wallet
 - View owned skins
 - Dark/Light Theme switch
-
-# Tools
-
-Tools that I used for this project:
-
-- Javascript
-- CSS
-- React-Native
-- Expo
-- Webstorm
-- Insomnia
-- https://valapidocs.techchrism.me/
-- https://valorant-api.com/
 
 # Run the project
 ### Install Node.js LTS
