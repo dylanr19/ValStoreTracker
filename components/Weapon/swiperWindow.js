@@ -6,7 +6,7 @@ const SwiperWindow = ({ containerStyle, contentArray, theme }) => {
     const placeholder =
         <View style={{ flex: 1 }}>
             <Text style={{ flex: 0.1, marginTop: '5%', color: theme.app.text, textAlign: 'center' }}>Video not available</Text>
-            <Image style={ { flex: 1, aspectRatio: 2 } } source={require('C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\images\\notfoundPlaceholderpng.png')}></Image>
+            // <Image style={ { flex: 1, aspectRatio: 2 } } source={require('C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\images\\notfoundPlaceholderpng.png')}></Image>
         </View>
 
     return(
