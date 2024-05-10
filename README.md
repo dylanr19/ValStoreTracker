@@ -22,7 +22,7 @@ The Valorant skin store is an in-game marketplace where players can purchase cos
 
 https://nodejs.org/en/
 
-### Install the dependencies ( optional )
+### Install the dependencies 
 
 ```
 $ npm install
