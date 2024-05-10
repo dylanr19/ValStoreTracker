@@ -15,7 +15,7 @@ const Daily = ({ isForeground }) => {
     const [scrollY] = useState(new Animated.Value(0));
     const [ weaponComponents, setWeaponComponents ] = useState([]);
     const [duration, setDuration] = useState(0); // the remaining time in seconds until the storefront expires
-    const banner = require('C:\\Users\\GIGABYTE\\WebstormProjects\\ValStoreTracker\\assets\\images\\valo-menu-background.jpeg');
+    const banner = 'https://preview.redd.it/simple-valorant-wallpaper-v0-q57biyp2f5xb1.png?width=3840&format=png&auto=webp&s=2fa779ebe0a624531a338fbb0c6636f692573a1c';
 
     const headerHeight = scrollY.interpolate({
        inputRange: [0, 300],
@@ -84,7 +84,7 @@ const Daily = ({ isForeground }) => {
 
     return(
         <View style={[styles.container, {backgroundColor: theme.app.background}]}>
-            <StoreHeader headerHeight={headerHeight} textComponent={textComponent()} imageStyle={styles.headerImg} banner={banner}/>
+            <StoreHeader headerHeight={headerHeight} textComponent={textComponent()} imageStyle={styles.headerImg} banner={{ uri: banner }}/>
             <Weapons weapons={weaponComponents} color={theme.weapon.background} scrollY={scrollY} />
         </View>
     );
